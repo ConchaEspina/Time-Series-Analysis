@@ -60,6 +60,8 @@ $$
 
 ### 严平稳性
 
+“分布平稳”
+
 #### 定义
 
 对一切时滞 $$k$$ 和时点 $$t_1, t_2, \dots, t_n$$ ，都有 $$Y_{t_1}, Y_{t_2}, \dots, Y_{t_n}$$ 与 $$Y_{t_1-k}, Y_{t_2-k}, \dots, Y_{t_n-k}$$ 的联合分布相同
@@ -67,12 +69,14 @@ $$
 #### 性质
 
 1. 均值： $$E(Y_t) = E(Y_{t-k})$$ 
-2. 方差： $$\text{Var}(Y_t) = \text{Var}(Y_{t-k})$$ 
+2. 方差： $$\text{Var}(Y_t) = \text{Var}(Y_{t-k}) \quad (E(X_t^2) < + \infty) $$ 
 3. 协方差： $$\gamma_{t,s} = \gamma_{0, |t-s|}$$ 
 
 记号： $$\begin{cases}  \gamma_k = \text{Cov}(Y_t, Y_{t-k}),\  \gamma_0 = \text{Var}(Y_t) \\ \rho_k = \text{Corr}(Y_t, Y_{t-k}) = \Large\frac{\gamma_k}{\gamma_0} \normalsize ,\  \rho_0 = 1 \end{cases}$$ 
 
 ### 宽平稳性
+
+“二阶矩平稳”
 
 #### 条件
 
