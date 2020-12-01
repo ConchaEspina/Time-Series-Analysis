@@ -69,11 +69,18 @@ $$
 * 协方差：$$\gamma_k = \begin{cases}  (-\theta_1+\theta_1\theta_2)\sigma^2_e, \quad k=1 \\ -\theta_2 \sigma_e^2, \quad k=2\\    0, \quad k\geq3 \end{cases}$$ 
 * 自相关函数：$$\rho_k = \begin{cases}  \frac{-\theta_1+\theta_1\theta_2}{1+\theta_1^2+\theta_2^2},\quad k=1 \\  \frac{-\theta_2}{1+\theta_1^2+\theta_2^2}, \quad k=2 \\   0, \quad k\geq3 \end{cases}$$ 
 
+### 一般$$\text{MA}(q)$$过程
 
+$$
+Y_t = e_t - \theta_1 e_{t-1} - \theta_2 e_{t-2} - \cdots - \theta_q e_{t-q}
+$$
 
+#### q阶滑动平均模型的性质
 
-
-
+* 均值：$$E(Y_t) = 0$$ 
+* 方差：$$\gamma_0 = (1+\theta_1^2+\theta_2^2+\cdots+\theta_q^2)\sigma^2_e$$ 
+* 协方差：$$\gamma_k = \begin{cases}  (-\theta_k+\theta_1\theta_{k+1}+\theta_2\theta_{k+2}+\cdots+\theta_{q-k}\theta_q)\sigma^2_e, \quad k=1,\dots,q \\ 0, \quad k>q \end{cases}$$ 
+* 自相关函数：$$\rho_k = \begin{cases}  \large\frac{-\theta_k+\theta_1\theta_{k+1}+\theta_2\theta_{k+2}+\cdots+\theta_{q-k}\theta_q}{1+\theta_1^2+\theta_2^2+\cdots+\theta_q^2}, \quad \normalsize k=1,\dots,q \\ 0, \quad k>q \end{cases}$$  → 自相关函数在滞后q期“截尾”
 
 ## 自回归过程
 
