@@ -41,7 +41,7 @@ $$
 Y_t = e_t - \theta_1 e_{t-1} - \theta_2 e_{t-2} - \cdots - \theta_q e_{t-q}
 $$
 
-### 一阶滑动平均模型
+### 一阶滑动平均过程
 
 $$
 Y_t = e_t - \theta e_{t-1}
@@ -49,14 +49,25 @@ $$
 
 #### 一阶滑动平均模型的性质
 
-* 
+* 均值：$$E(Y_t) = 0$$ 
+* 方差：$$\gamma_0 = (1+\theta^2)\sigma^2_e$$ 
+* 协方差：$$\gamma_k = \begin{cases}  -\theta\sigma^2_e,\quad k=1 \\   0, \quad k\geq2 \end{cases}$$ 
+* 自相关函数：$$\rho_k = \begin{cases}  -\frac{\theta}{1+\theta^2},\quad k=1 \\   0, \quad k\geq2 \end{cases}$$ 
 
+> 当连续观测值密切正相关时，如果一个观测值高于序列平均值，那么下一个观测值往往也高于平均值，图形随时间的变化较为平滑，偶尔有大的波动。当连续观测值密切负相关时，如果一个观测值高于序列平均值，那么下一个观测值往往会低于平均值，图形随时间的推移呈锯齿状，围绕均值来回震荡。
 
+### 二阶滑动平均过程
 
+$$
+Y_t = e_t - \theta_1 e_{t-1} - \theta_2 e_{t-2}
+$$
 
+#### 二阶滑动平均模型的性质
 
-
-
+* 均值：$$E(Y_t) = 0$$ 
+* 方差：$$\gamma_0 = (1+\theta_1^2+\theta_2^2)\sigma^2_e$$ 
+* 协方差：$$\gamma_k = \begin{cases}  (-\theta_1+\theta_1\theta_2)\sigma^2_e, \quad k=1 \\ -\theta_2 \sigma_e^2, \quad k=2\\    0, \quad k\geq3 \end{cases}$$ 
+* 自相关函数：$$\rho_k = \begin{cases}  \frac{-\theta_1+\theta_1\theta_2}{1+\theta_1^2+\theta_2^2},\quad k=1 \\  \frac{-\theta_2}{1+\theta_1^2+\theta_2^2}, \quad k=2 \\   0, \quad k\geq3 \end{cases}$$ 
 
 
 
