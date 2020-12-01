@@ -72,14 +72,21 @@ $$
 1. 观察残差的时间序列图 → 是否为没有明显模式的矩形散点图？
 2. 观察残差与估计的相应趋势 →残差的大小与拟合的趋势值的大小有没有相关关系？
 3. 观察残差的直方图/QQ图 → 残差是否具有显著正态性？
+4. 游程检验 → 残差是否具有明显独立性？
 
+> 游程检验：残差大多位于中位数附近且倾向于随着时间“一起变动”→相邻残差正相关；残差围绕中位数上下震荡→相邻残差负相关
 
+### 样本自相关函数
 
+$$
+r_k = \hat{\rho}_k = \frac{\Large\frac{1}{n-k}\normalsize \sum\limits_{t=k+1}^n (Y_t - \bar{Y})(Y_{t-k} - \bar{Y})}{\Large\frac{1}{n-1}\normalsize \sum\limits_{t=1}^n (Y_t - \bar{Y})^2} \approx  \frac{\sum\limits_{t=k+1}^n (Y_t - \bar{Y})(Y_{t-k} - \bar{Y})}{\sum\limits_{t=1}^n (Y_t - \bar{Y})^2}, \qquad k=1,2,\cdots
+$$
 
+#### 样本自相关函数的性质和应用
 
+$$r_k$$ 就是 $$\rho_k$$ 的估计值
 
+ $$r_k$$ 的近似标准误差为 $$\frac{1}{\sqrt{n}}$$ 
 
-
-
-
+接受假设 “$$\rho_k = 0$$” 的判断标准： $$r_k$$ 落在 $$\pm \frac{2}{\sqrt{n}}$$ 区间之内
 
