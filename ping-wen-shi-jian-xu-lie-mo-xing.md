@@ -211,8 +211,8 @@ $$
 
 $$
 \begin{align}
-\gamma_k &= \text{Cov}(Y_t,\ Y_{t-k}) = \text{Cov}(\phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \cdots + \phi_p Y_{t-p} + e_t,\ Y_{t-k}) \\ &= \phi_1 \gamma_{k-1} + \phi_2 \gamma_{k-2} + \cdots + \phi_p \gamma_{k-p} \\
-\Rightarrow&\ \rho_k = \phi_1 \rho_{k-1} + \phi_2 \rho_{k-2} + \cdots + \phi_p \rho_{k-p}, \quad k \geq 1 \\
+\gamma_k &= \text{Cov}(Y_t,\ Y_{t-k}) = \text{Cov}(\phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \cdots + \phi_p Y_{t-p} + e_t,\ Y_{t-k}) \\ &= \phi_1 \gamma_{k-1} + \phi_2 \gamma_{k-2} + \cdots + \phi_p \gamma_{k-p} \\\\
+\Rightarrow&\ \rho_k = \phi_1 \rho_{k-1} + \phi_2 \rho_{k-2} + \cdots + \phi_p \rho_{k-p}, \quad k \geq 1 \\\\
 \Rightarrow&\ \begin{cases} 
 \rho_1 = \phi_1 + \phi_2 \rho_1 + \cdots + \phi_p \rho_{p-1} \\
 \rho_2 = \phi_1 \rho_1 + \phi_2 +\cdots + \phi_p \rho_{p-2} \\
