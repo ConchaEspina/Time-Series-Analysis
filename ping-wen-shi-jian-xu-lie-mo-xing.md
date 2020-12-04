@@ -172,9 +172,82 @@ $$
 $$
 \begin{align}
 \gamma_0 &= \text{Cov}(Y_t,\ Y_t) = \text{Cov}(\phi_1 Y_{t-1} + \phi_2 Y_{t-2} + e_t,\ \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + e_t) \\&= (\phi_1^2+\phi_2^2) \gamma_0 + 2\phi_1\phi_2 \gamma_1 + \sigma_e^2 = (\phi_1^2+\phi_2^2 + \frac{2\phi_1^2\phi_2}{1-\phi_2}) \gamma_0 + \sigma_e^2 \\
-\Rightarrow\ &\frac{1-\phi_2-\phi_1^2-\phi_2^2-\phi_1^2\phi_2+\phi_2^3}{1-\phi_2} \gamma_0 = \sigma_e^2
+\Rightarrow\ &\frac{1-\phi_2-\phi_1^2-\phi_2^2-\phi_1^2\phi_2+\phi_2^3}{1-\phi_2} \gamma_0 = \frac{(1+\phi_2)[(1-\phi_2)^2-\phi_1^2]}{1-\phi_2} \gamma_0 = \sigma_e^2 \\
+\Rightarrow\ &\gamma_0 = \Big( \normalsize\frac{1-\phi_2}{1+\phi_2} \Big) \normalsize \frac{\sigma_e^2}{(1-\phi_2)^2 - \phi_1^2}
 \end{align}
 $$
+
+#### $$\text{AR}(2)$$模型的$$\psi$$系数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
