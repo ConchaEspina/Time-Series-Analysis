@@ -324,13 +324,21 @@ k&lt;p的情况比较复杂
 
 ## 可逆性
 
+### $$\text{MA}(1)$$模型的可逆性
 
+$$
+\begin{align}
+Y_t& = e_t - \theta e_{t-1} \\
+\Rightarrow\ e_t &= Y_t + \theta e_{t-1}  = Y_t + \theta (Y_{t-1} + \theta e_{t-2}) \\ 
+&= Y_t + \theta Y_{t-1} + \theta^2 e_{t-2} \\ 
+&= Y_t + \theta Y_{t-1} + \theta^2 Y_{t-2} + \cdots \\
+\Rightarrow\ Y_t &= (-\theta Y_{t-1} - \theta^2 Y_{t-2} - \cdots) + e_t
+\end{align}
+$$
 
+如果$$|\theta| < 1$$，那么 $$\text{MA}(1)$$模型可以逆转成一个无穷阶的自回归模型；当且仅当$$|\theta| < 1$$时 $$\text{MA}(1)$$模型可逆。
 
-
-
-
-
+### 一般$$\text{MA}(q)$$模型或$$\text{ARMA}(p,q)$$模型的可逆性
 
 
 
