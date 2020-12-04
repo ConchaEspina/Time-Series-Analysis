@@ -222,25 +222,51 @@ $$
 \end{align}
 $$
 
+#### $$\text{AR}(p)$$ 模型的方差
 
+$$
+\begin{align}
+&E(e_t Y_t) = E(e_t (\phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \cdots + \phi_p Y_{t-p} + e_t) ) = E(e_t^2) = \sigma_e^2 \\
+\Rightarrow&\ \gamma_0 = \text{Var}(Y_t) = \text{Cov}(Y_t,\ \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \cdots + \phi_p Y_{t-p} + e_t) \\ &= \phi_1 \gamma_1 + \phi_2 \gamma_2 + \cdots + \phi_p \gamma_p + \sigma_e^2 = (\phi_1\rho_1 + \phi_2\rho_2 + \cdots + \phi_p\rho_p) \gamma_0 + \sigma_e^2 \\ 
+\Rightarrow&\ \gamma_0 = \frac{\sigma_e^2}{1 - \phi_1\rho_1 - \phi_2\rho_2 - \cdots - \phi_p\rho_p}
 
+\end{align}
+$$
 
+## 自回归滑动平均混合模型
 
+**阶数分别为p和的自回归滑动平均混合过程** $$\text{ARMA}(p,q)$$**：**
 
+$$
+Y_t = \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \cdots + \phi_p Y_{t-p} + e_t - \theta_1 e_{t-1} - \theta_2 e_{t-2} - \cdots - \theta_q e_{t-q}
+$$
 
+### $$\text{ARMA}(1,1)$$模型 
 
+$$
+Y_t = \phi Y_{t-1} + e_t - \theta e_{t-1}
+$$
 
+#### $$\text{ARMA}(1,1)$$模型的性质
 
+* 方差与协方差
 
+$$
+\begin{align}
+\gamma_k &= \text{Cov}(Y_t,\ Y_{t-k}) = \text{Cov}(\phi Y_{t-1} + e_t - \theta e_{t-1},\ Y_{t-k}) \\
+&= \begin{cases} \phi \gamma_0 - \theta \sigma_e^2, \qquad k=1 \\ 
+\phi \gamma_{k-1}, \quad\quad\quad\ \ \ k \geq 2
+\end{cases}
+\end{align}
+$$
 
-
-
-
-
-
-
-
-
+$$
+\begin{align}
+&E(e_t Y_t) = E(e_t (\phi Y_{t-1}+e_t-\theta e_{t-1}) ) = \sigma_e^2 \\\\
+\Rightarrow&\ \gamma_0 = \text{Cov}(Y_t,\ \phi Y_{t-1} + e_t - \theta e_{t-1}) \\ &= \phi \gamma_1 + \sigma_e^2 - \theta \text{Cov}(\phi Y_{t-1} + e_t - \theta e_{t-1},\ e_{t-1}) \\
+&= \phi \gamma_1 + \sigma_e^2 -\theta\phi \sigma_e^2 + \theta^2 \sigma_e^2 \\ &= \phi \gamma_1 + [1 - \theta(\phi-\theta)]\sigma_e^2
+\end{align}
+$$
 
 
 
