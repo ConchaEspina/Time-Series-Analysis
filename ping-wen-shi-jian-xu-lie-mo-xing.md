@@ -179,17 +179,35 @@ $$
 
 #### $$\text{AR}(2)$$模型的$$\psi$$系数
 
+$$
+\begin{align}
+&Y_t = \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + e_t \\
+\Rightarrow\ &e_t + \psi_1 e_{t-1} + \psi_2 e_{t-2} + \cdots \\ &= e_t + \phi_1 (e_{t-1} + \psi_1 e_{t-2} + \cdots) + \phi_2 (e_{t-2} + \cdots) \\ &= e_t + \phi_1 e_{t-1} + (\phi_1\psi_1 + \phi_2) e_{t-2} + \cdots \\\\
+\Rightarrow\ &\psi_0 = 1,\ \psi_1 = \phi_1,\ \psi_2 = \phi_1^2 + \phi_2
+\end{align}
+$$
 
+### 一般自回归过程
 
+$$
+Y_t = \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \cdots + \phi_p Y_{t-p} + e_t
+$$
 
+#### 一般自回归过程的平稳性
 
+* AR特征多项式： $$\phi(x) = 1 - \phi_1 x - \phi_2 x^2 - \cdots - \phi_p x^p$$ 
+* AR特征方程： $$1 - \phi_1 x - \phi_2 x^2 - \cdots - \phi_p x^p = 0$$ 
 
+平稳性必要条件：
 
+$$
+\begin{cases}
+\phi_1 +\phi_2 + \cdots + \phi_p < 1 \\
+|\phi_p| < 1
+\end{cases}
+$$
 
-
-
-
-
+#### Yule-Walker方程组
 
 
 
