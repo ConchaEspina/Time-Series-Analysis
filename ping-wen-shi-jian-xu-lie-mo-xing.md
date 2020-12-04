@@ -292,11 +292,15 @@ Y_t &= e_t - \theta e_{t-1} + \phi Y_{t-1} = e_t - \theta e_{t-1} + \phi(e_{t-1}
 \end{align}
 $$
 
+即 $$\psi_j = (\phi - \theta) \phi^{j-1},\quad j \geq 1$$ 
 
+#### $$\text{ARMA}(1,1)$$模型的平稳条件
 
+$$
+|\phi| < 1
+$$
 
-
-
+### 一般$$\text{ARMA}(p,q)$$模型
 
 
 
