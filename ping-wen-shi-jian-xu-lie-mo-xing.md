@@ -264,13 +264,33 @@ $$
 \begin{align}
 &E(e_t Y_t) = E(e_t (\phi Y_{t-1}+e_t-\theta e_{t-1}) ) = \sigma_e^2 \\\\
 \Rightarrow&\ \gamma_0 = \text{Cov}(Y_t,\ \phi Y_{t-1} + e_t - \theta e_{t-1}) \\ &= \phi \gamma_1 + \sigma_e^2 - \theta \text{Cov}(\phi Y_{t-1} + e_t - \theta e_{t-1},\ e_{t-1}) \\
-&= \phi \gamma_1 + \sigma_e^2 -\theta\phi \sigma_e^2 + \theta^2 \sigma_e^2 \\ &= \phi \gamma_1 + [1 - \theta(\phi-\theta)]\sigma_e^2
+&= \phi \gamma_1 + \sigma_e^2 -\theta\phi \sigma_e^2 + \theta^2 \sigma_e^2 \\ &= \phi \gamma_1 + [1 - \theta(\phi-\theta)]\sigma_e^2 \\
+&= \phi^2 \gamma_0 + (1 - 2\theta\phi + \theta^2) \sigma_e^2 \\\\
+\Rightarrow&\ \gamma_0 = \frac{1 - 2\theta\phi + \theta^2}{1 - \phi^2} \sigma_e^2
 \end{align}
 $$
 
+* 自相关函数
 
+$$
+\begin{align}
+\rho_k &= \rho_1 \phi^{k-1} = (\phi - \frac{\theta(1-\phi^2)}{1-2\theta\phi+\theta^2}) \phi^{k-1} \\
+&= \frac{\phi-\theta\phi^2+\theta^2\phi-\theta}{1-2\theta\phi+\theta^2} \phi^{k-1} \\
+&= \frac{(\phi-\theta)(1-\theta\phi)}{1-2\theta\phi+\theta^2} \phi^{k-1}, \quad k \geq 1
+\end{align}
+$$
 
+随着滞后长度$$k$$的增加，模型的自相关函数指数递减。
 
+#### $$\text{ARMA}(1,1)$$模型的一般线性过程表达式
+
+$$
+\begin{align}
+Y_t &= e_t - \theta e_{t-1} + \phi Y_{t-1} = e_t - \theta e_{t-1} + \phi(e_{t-1} - \theta e_{t-2} + \phi Y_{t-2}) \\ &= e_t +(\phi - \theta) e_{t-1} - \theta\phi e_{t-2} + \phi^2 (e_{t-2} - \theta e_{t-3} + \phi Y_{t-3}) \\
+&= e_t +(\phi - \theta) e_{t-1} + (\phi - \theta) \phi e_{t-2} - \theta \phi^2 e_{t-3} + \phi^3 (e_{t-3} - \theta e_{t-4} + \phi Y_{t-4}) \\
+&= e_t + (\phi - \theta) \sum_{j=1}^\infty \phi^{j-1} e_{t-j}
+\end{align}
+$$
 
 
 
