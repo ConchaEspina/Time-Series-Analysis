@@ -146,25 +146,35 @@ $$\text{AR}(2)$$ 过程的平稳条件： $$\text{AR}(2)$$模型是平稳的当�
 * $$\phi_2 - \phi_1 < 1$$ 
 * $$|\phi_2| < 1$$ 
 
- 
+平稳区域：
 
+ ![](.gitbook/assets/screen-shot-2020-12-04-at-4.46.29-pm.png)
 
+#### $$\text{AR}(2)$$ 过程的自相关函数
 
+$$
+\begin{align}
+\gamma_k &= \text{Cov}(Y_t, Y_{t-k}) = \text{Cov}(\phi_1 Y_{t-1} + \phi_2 Y_{t-2} + e_t,\ Y_{t-k})  \\ &=  \phi_1 \gamma_{k-1} + \phi_2 \gamma_{k-2}, \quad k = 1, 2, \cdots
+\end{align}
+$$
 
+$$
+\rho_k = \phi_1 \rho_{k-1} + \phi_2 \rho_{k-2}, \quad k = 1, 2, \cdots
+$$
 
+特别地，有：
 
+* $$\rho_1 = \phi_1 \rho_0 + \phi_2 \rho_{-1} = \phi_1 + \phi_2 \rho_1\ \Rightarrow\ \rho_1 = \frac{\phi_1}{1-\phi_2} $$ 
+* $$\rho_2 = \phi_1 \rho_1 + \phi_2 \rho_0 = \frac{\phi_1^2}{1-\phi_2} + \phi_2 = \frac{\phi_2(1-\phi_2)+\phi_1^2}{1-\phi_2}$$ 
 
+#### $$\text{AR}(2)$$模型的方差
 
-
-
-
-
-
-
-
-
-
-
+$$
+\begin{align}
+\gamma_0 &= \text{Cov}(Y_t,\ Y_t) = \text{Cov}(\phi_1 Y_{t-1} + \phi_2 Y_{t-2} + e_t,\ \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + e_t) \\&= (\phi_1^2+\phi_2^2) \gamma_0 + 2\phi_1\phi_2 \gamma_1 + \sigma_e^2 = (\phi_1^2+\phi_2^2 + \frac{2\phi_1^2\phi_2}{1-\phi_2}) \gamma_0 + \sigma_e^2 \\
+\Rightarrow\ &\frac{1-\phi_2-\phi_1^2-\phi_2^2-\phi_1^2\phi_2+\phi_2^3}{1-\phi_2} \gamma_0 = \sigma_e^2
+\end{align}
+$$
 
 
 

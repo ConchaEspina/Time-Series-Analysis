@@ -1,5 +1,6 @@
-# Time-Series
-Summary for undergraduate course MANA130022 (2020Fall)     
-Reference: *Time Series Analysis with Applications in R (Second Edition)*     
-Language: Simplified Chinese    
-Powered by Gitbook ;)
+---
+description: 爬爬爬
+---
+
+# 时间序列分析自救指南
+
