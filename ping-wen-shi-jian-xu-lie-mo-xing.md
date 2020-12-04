@@ -302,25 +302,27 @@ $$
 
 ### 一般$$\text{ARMA}(p,q)$$模型
 
+* 平稳性条件
 
+在条件 $$e_t$$ 独立于 $$Y_{t-1},\ Y_{t-2},\ \dots$$ 下，当且仅当AR特征方程 $$\phi(x) = 0$$ 的根的模大于1，模型有平稳解
 
+* 一般线性过程表示
 
+$$
+\psi_j = -\theta_j + \phi_p \psi_{j-p} + \phi_{p-1} \psi_{j-p+1} + \cdots + \phi_1 \psi_{j-1}
+$$
 
+其中 $$\psi_0 = 1;\ \psi_j = 0, \forall\ j<0;\ \theta_j = 0,\ \forall j>q.$$ 
 
+* 自相关函数
 
+$$
+\rho_k = \phi_1 \rho_{k-1} + \phi_2 \rho_{k-2} + \cdots + \phi_p \rho_{k-p},\quad k>q
+$$
 
+k&lt;p的情况比较复杂
 
-
-
-
-
-
-
-
-
-
-
-
+## 可逆性
 
 
 
