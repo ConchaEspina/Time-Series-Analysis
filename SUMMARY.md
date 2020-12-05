@@ -5,4 +5,7 @@
 * [趋势](trends.md)
 * [平稳时间序列模型](models-for-stationary-time-series.md)
 * [非平稳时间序列模型](models-for-nonstationary-time-series.md)
+* [模型识别](model-specification.md)
+* [参数估计](parameter-estimation.md)
+* [模型诊断](model-diagnostics.md)
 
