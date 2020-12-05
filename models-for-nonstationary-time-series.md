@@ -6,23 +6,29 @@ description: 课本第5章
 
 ## 通过差分平稳化
 
+一阶差分： $$\nabla Y_t = Y_t - Y_{t-1}$$ 
 
+### 使得模型的一阶差分是平稳过程的假设
 
+1. $$Y_t = M_t + X_t$$ 
 
+$$M_t$$是随时间缓慢变化的序列
 
+通过$$\beta_{0,t}$$对$$M_t$$做最小二乘估计 
 
+2. $$Y_t = M_t + e_t,\ M_t = M_{t-1} + \epsilon_t$$ 
 
+$$M_t$$是由随机游动支配的随机的且随着时间缓慢变化的序列，$$\{e_t\}$$和 $$\{\epsilon_t\}$$是独立的白噪声序列 
 
+### 使得模型的二阶差分是平稳过程的假设
 
+1. $$Y_t = M_t + X_t$$ 
 
+通过$$\beta_{0,t} + j \beta_{1,t}$$对$$M_t$$做最小二乘估计 
 
+2.  $$Y_t = M_t + e_t,\ M_t = M_{t-1} + W_t,\ W_t = W_{t-1} + \epsilon_t$$ 
 
-
-
-
-
-
-
+$$M_t$$的变化率$$\nabla M_t$$在时域上是慢变的，$$\{e_t\}$$和 $$\{\epsilon_t\}$$是独立的白噪声序列。
 
 ## ARIMA模型
 
@@ -202,53 +208,71 @@ $$
 
 ## ARIMA模型中的常数项
 
+对于$$\text{ARIMA}(p,d,q)$$模型， $$\nabla^d Y_t = W_t$$是平稳的$$\text{ARMA}(p,q)$$过程，假设其具有非零常数均值$$\mu$$：
 
+$$
+W_t = \theta_0 + \phi_1 W_{t-1} + \phi_2 W_{t-2} + \cdots + \phi_p W_{t-p} + e_t - \theta_1 e_{t-1} - \theta_2 e_{t-2} - \cdots - \theta_q e_{t-q} \\ \quad \\
+\Rightarrow\ \mu = \theta_0 + (\phi_1 + \phi_2 + \cdots + \phi_p) \mu \\
+\Rightarrow\ \mu = \frac{\theta_0}{1 - \phi_1 - \phi_2 \ \cdots - \phi_p}
+$$
 
+### 具有非零常数均值的$$\text{IMA}(1,1)$$模型
 
+$$
+Y_t = Y_{t-1} + \theta_0 + e_t - \theta_1 e_{t-1} \\
+\Rightarrow\ W_t = \theta_0 + e_t - \theta_1 e_{t-1}
+$$
 
+白噪音表达形式：
 
+$$
+Y_t = \theta_0 + e_t - \theta_1 e_{t-1} + Y_{t-1} = \theta_0 + e_t - \theta_1 e_{t-1} + (\theta_0 + e_{t-1} - \theta_1 e_{t-2} + Y_{t-2}) \\
+= 2\theta_0 + e_t + (1 - \theta_1) e_{t-1} - \theta_1 e_{t-2} + (\theta_0 + e_{t-2} - \theta_1 e_{t-3} + Y_{t-3}) = \cdots \\
+= (t+m+1) \theta_0 + e_t + (1 - \theta_1) e_{t-1} + \cdots + (1 - \theta_1) e_{-m} - \theta_0 e_{-m-1}
+$$
 
+与零均值的情况相比，模型多了具有斜率$$\theta_0$$的线性确定时间趋势项$$(t+m+1)\theta_0$$。
 
+等价表达形式：
 
+$$
+Y_t = Y_t^\prime + \beta_0 + \beta_1 t
+$$
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+其中$$Y_t^\prime$$是$$\text{IMA}(1,1)$$序列，$$E(\nabla Y_t) = \beta_1,\ E(\nabla Y_t^\prime) = 0$$。
 
 ## 其他变换
 
+### 百分比变动和对数
 
+适合进行对数变换的序列特征：随着序列值的增大，序列的散度即围绕某一值的波动也越大，反之亦然。
 
+示例：
 
+* 标准差与序列的水平值成正比（$$\sqrt{\text{Var}(Y_t)} = \mu_t \sigma$$）：对数变换后方差为常数$$\sigma^2$$ 
+* 序列水平值呈指数变化：对数变换后序列呈现线性时间趋势
 
+#### 具有相对稳定百分比变化的序列
 
+$$
+Y_t = (1+X_t) Y_{t-1} \\
+\Rightarrow\ \log(Y_t) - \log(Y_{t-1}) = \log(1+X_t)
+$$
 
+若将$$X_t$$限制在一个比较小的值（如$$|X_t|<0.2$$）则可以得到一个良好的逼近：
 
+$$
+\nabla \log(Y_t) \approx X_t
+$$
 
+### 幂变换
 
-
-
-
-
-
-
-
-
+$$
+g(x) = \begin{cases}
+\Large\frac{x^\lambda - 1}{\lambda}\normalsize,\quad \lambda \neq 0 \\
+\log(x),\quad \lambda = 0
+\end{cases}
+$$
 
 ##  延迟算子
 
