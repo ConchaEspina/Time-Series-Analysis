@@ -4,6 +4,26 @@ description: 课本第5章
 
 # 非平稳时间序列模型
 
+## 通过差分平稳化
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## ARIMA模型
 
 * 自回归滑动平均求和模型
@@ -123,7 +143,9 @@ Y_t &= \sum_{j=0}^{t+m} (j+1) (e_{t-j} - \theta_1 e_{t-j-1} - \theta_2 e_{t-j-2}
 =& e_t + \sum_{j=1}^{t+m} [1+\theta_2+(1-\theta_1-\theta_2)j] e_{t-j} - [(t+m+1)\theta_1+(t+m)\theta_2] e_{-m-1} \\
 &- (t+m+1)\theta_2 e_{-m-2} \\
 =& e_t + \sum_{j=1}^{t+m} [(j+1)-j\theta_1-(j-1)\theta_2] e_{t-j} - [(t+m+1)\theta_1+(t+m)\theta_2] e_{-m-1} \\
-&- (t+m+1)\theta_2 e_{-m-2}
+&- (t+m+1)\theta_2 e_{-m-2} \\
+=& e_t + \sum_{j=1}^{t+m} \psi_j e_{t-j}  - [(t+m+1)\theta_1+(t+m)\theta_2] e_{-m-1} - (t+m+1)\theta_2 e_{-m-2}, \\
+&\psi_j = 1+\theta_2+(1-\theta_1-\theta_2)j
 \end{align}
 $$
 
@@ -144,6 +166,41 @@ $$
 
 其中$$|\phi| < 1$$。
 
+#### $$\text{ARI}(1,1)$$ 模型的白噪声表达
+
+* 通用模型
+
+如何将任意ARIMA表示成白噪音的线性组合形式 $$Y_t = e_t + \psi_1 e_{t-1} + \psi_2 e_{t-2} + \cdots$$？
+
+借助下方等式求出各个$$\psi$$权重：
+
+$$
+(1 - \phi_1x - \cdots - \phi_px^p) (1 - x)^d (1 + \psi_1x + \cdots + \psi_{t+m}x^{t+m}) = 1 - \theta_1x - \cdots - \theta_qx^q
+$$
+
+{% hint style="info" %}
+$$\phi(B) \nabla^d Y_t = \theta(B) e_t \Rightarrow \phi(B) \nabla^d [\psi(B) e_t] = \theta(B) e_t$$ 
+
+如果不设首次观测时间$$-m$$的话，$$\psi$$系数的表达式可能不收敛。
+{% endhint %}
+
+只要令等式两边相同次幂项的系数相等，即可求出所有$$\psi$$权重。
+
+* 特例：$$\text{ARI}(1,1)$$模型
+
+$$
+(1-\phi x)(1-x)(1+\psi_1x+\psi_2x^2+\cdots+\psi_{t+m}x^{t+m}) = 1 \\
+\Rightarrow (1-\phi x)(1-x)(\cdots+\psi_{k-2}x^{k-2}+\psi_{k-1}x^{k-1}+\psi_kx^k+\cdots) = 1 \\ \quad \\
+\Rightarrow \psi_k = (1+\phi)\psi_{k-1} - \phi\psi_{k-2}, \quad k \geq 2
+$$
+
+其中 $$\psi_0=1,\ \psi_1 = 1+\phi$$。
+
+$$
+\psi_k = \frac{1-\phi^{k+1}}{1-\phi}, \quad k \geq 1
+$$
+
+## ARIMA模型中的常数项
 
 
 
@@ -169,6 +226,11 @@ $$
 
 
 
+
+
+
+
+## 其他变换
 
 
 
