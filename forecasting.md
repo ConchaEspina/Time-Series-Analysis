@@ -99,6 +99,110 @@ $$
 
 是基于所有关于$$X$$的函数所得的$$Y$$的最优预测。
 
+更一般地，如果用一个$$X_1, X_2, \cdots, X_n$$的函数来预测$$Y$$，则易证最小均方误差预测为
+
+$$
+E(Y|X_1, X_2, \cdots, X_n)
+$$
+
+### 时间序列的最小均方误差预测
+
+基于时间序列可获得的历史数据$$Y_1, Y_2, \cdots, Y_t$$，预测未来$$l$$期的值$$Y_{t+l}$$，称时间$$t$$为预测起点，$$l$$为预测前置时间，得到最小均方误差预测值：
+
+$$
+\hat{Y}_t(l) = E(Y_{t+l}|Y_1, Y_2, \cdots, Y_t)
+$$
+
+## 确定性趋势
+
+$$
+Y_t = \mu_t + X_t
+$$
+
+其中$$X_t$$是方差为$$\gamma_0$$的白噪声。
+
+$$
+\begin{align}
+\hat{Y}_t(l) &= E(\mu_{t+l}+X_{t+l}\ |\ Y_1, \cdots, Y_t) = E(\mu_{t+l}\ |\ Y_1, \cdots, Y_t) + E(X_{t+l}\ |\ Y_1, \cdots, Y_t) \\
+&= \mu_{t+l} + E(X_{t+l}) = \mu_{t+l}
+\end{align}
+$$
+
+### 趋势示例
+
+#### 线性趋势
+
+$$
+\hat{Y}_t(l) = \mu_{t+l} = \beta_0 + \beta_1 (t+l)
+$$
+
+#### 季节模型
+
+$$
+\hat{Y}_t(l) = \mu_{t+l} = \mu_{t+s+l} = \hat{Y}_t(l+s)
+$$
+
+### 预测误差
+
+$$
+e_t(l) = Y_{t+l} - \hat{Y}_t(l) = \mu_{t+l} + X_{t+l} - \mu_{t+l} = X_{t+l}
+$$
+
+#### 预测误差的性质
+
+* 期望：$$E(e_t(l)) = 0$$ → $$\hat{Y}_t(l)$$无偏
+* 方差： $$\text{Var}(e_t(l)) = \gamma_0$$ 
+
+## ARIMA预测
+
+### $$\text{AR}(1)$$ 
+
+#### $$l = 1$$ 
+
+$$
+Y_{t+1} - \mu = \phi(Y_t - \mu) + e_{t+1}
+$$
+
+对两边取条件期望，得：
+
+$$
+\hat{Y}_t(1) - \mu = \phi [E(Y_t | Y_1, \cdots, Y_t) - \mu] + E(e_{t+1} | Y_1, \cdots, Y_t) \\
+= \phi (Y_t - \mu) + E(e_{t+1}) = \phi (Y_t - \mu) \\ \quad \\
+\Rightarrow\ \hat{Y}_t(1) = \phi(Y_t - \mu) + \mu
+$$
+
+预测误差：
+
+$$
+e_t(1)  = Y_{t+1} - \hat{Y}_t(1) = Y_{t+1} - \mu - \phi(Y_t - \mu) = e_{t+1} \\ \quad \\
+\Rightarrow\ E(e_t(1)) = 0,\ \text{Var}(e_t(1)) = \sigma_e^2
+$$
+
+#### 一般情况
+
+$$
+\hat{Y}_t(l) = \phi[E(Y_{t+l-1} | Y_1, \cdots, Y_t) - \mu] + E(e_{t+l-1} | Y_1, \cdots, Y_t) + \mu \\
+= \phi [\hat{Y}_t(l-1) - \mu] + \mu = \phi^2 [\hat{Y}_t(l-2) - \mu] + \mu \\
+= \cdots = \phi^{l-1} [\hat{Y}_t(1) - \mu] + \mu = \phi^l (Y_t - \mu) + \mu
+$$
+
+因为$$|\phi|<1$$，所以当$$l$$很大的时候，有$$\hat{Y}_t(l) \approx \mu$$。
+
+预测误差：
+
+$$
+Y_t = \mu + e_t + \phi e_{t-1} + \phi^2 e_{t-2} + \cdots
+$$
+
+$$
+\begin{align}
+e_t(l) &= Y_{t+l} - \hat{Y}_t(l) = Y_{t+l} - \mu - \phi^l(Y_t - \mu) \\
+&= (e_{t+l} + \phi e_{t+l-1} + \phi^2 e_{t+l-2} + \cdots) - \phi^l (e_t + \phi e_{t-1} + \phi^2 e_{t-2} + \cdots) \\
+&= e_{t+l} + \phi e_{t+l-1} + \phi^2 e_{t+l-2} + \cdots + \phi^{l-1} e_{t+1}
+\end{align} \\ \quad \\
+\Rightarrow\ E(e_t(l)) = 0,\ \text{Var}(e_t(l)) = \frac{1-\phi^{2l}}{1-\phi^2} \sigma_e^2
+$$
+
 
 
 
