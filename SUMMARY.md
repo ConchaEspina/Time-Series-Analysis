@@ -8,4 +8,6 @@
 * [模型识别](model-specification.md)
 * [参数估计](parameter-estimation.md)
 * [模型诊断](model-diagnostics.md)
+* [预测](forecasting.md)
+* [季节模型](seasonal-models.md)
 

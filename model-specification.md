@@ -67,7 +67,7 @@ $$
 
 ## 偏自相关函数和扩展的自相关函数
 
-\*\*\*\*$$k$$**阶滞后偏自相关系数：**消除中间介入变量$$Y_{t-1}, Y_{t-2}, \cdots, Y_{t-k+1}$$的影响后 $$Y_t$$和$$Y_{t-k}$$的的相关系数函数。
+\*\*\*\*$$k$$**阶滞后偏自相关系数（PACF）：**消除中间介入变量$$Y_{t-1}, Y_{t-2}, \cdots, Y_{t-k+1}$$的影响后 $$Y_t$$和$$Y_{t-k}$$的的相关系数函数。
 
 ### 偏自相关函数的两种更精确定义
 
@@ -81,21 +81,99 @@ $$
 
 #### 基于中间变量对$$Y_t$$的预测
 
+用中间介入变量分别对$$Y_t$$和$$Y_{t-k}$$进行预测：
 
+$$
+Y_t = \beta_1 Y_{t-1} + \beta_2 Y_{t-2} + \cdots + \beta_{k-1} Y_{t-k+1} \\
+Y_{t-k} = \beta_1 Y_{t-k+1} + \beta_2 Y_{t-k+2} + \cdots + \beta_{k-1} Y_{t-1}
+$$
 
+其中$$\beta$$的选择是使得均方误差最小
 
+$$
+\phi_{kk} = \text{Corr}(Y_t - \beta_1 Y_{t-1} - \beta_2 Y_{t-2} - \cdots - \beta_{k-1} Y_{t-k+1}, \\
+Y_{t-k} - \beta_1 Y_{t-k+1} - \beta_2 Y_{t-k+2} - \cdots - \beta_{k-1} Y_{t-1})
+$$
 
+即$$\phi_{kk}$$为预测误差之间的相关系数。（对于正态分布的时间序列，两种定义一致）
 
+通常取$$\phi_{11} = 1$$。
 
+* $$\phi_{22}$$的计算
 
+$$
+\hat{Y}_t = \rho_1 Y_{t-1}
+$$
 
+（见[最小均方误差预测](forecasting.md)）
 
+$$
+\text{Cov}(Y_t - \rho_1 Y_{t-1},\ Y_{t-2} - \rho_1 Y_{t-1}) = \gamma_2 - 2\rho_1\gamma_1 + \rho_1^2\gamma_0 = \gamma_0 (\rho_2 - \rho_1^2)  \\
+\text{Var}(Y_t - \rho_1 Y_{t-1}) = \text{Var}(Y_{t-2} - \rho_1 Y_{t-1}) = \gamma_0 (1 - \rho_1^2)
+\\ \quad \\
+\Rightarrow\ \phi_{22} = \text{Corr}(Y_t - \rho_1 Y_{t-1},\ Y_{t-2} - \rho_1 Y_{t-1}) = \frac{\rho_2 - \rho_1^2}{1 - \rho_1^2}
+$$
 
+对于$$\text{AR}(1)$$模型，$$\rho_k = \phi^k\ \Rightarrow\ \phi_{22} = \frac{\phi^2 - \phi^2}{1 - \phi^2} = 0$$ 
 
+### $$\text{AR}(p)$$模型的偏自相关函数
 
+$$
+\phi_{kk} = 0, \quad k>p
+$$
 
+\*\*\*\*$$\text{AR}(p)$$**过程的偏自相关函数在滞后超过过程的阶数时截尾。**
 
+### 对任意平稳过程的偏自相关函数求解
 
+$$
+\rho_j = \phi_{k1} \rho_{j-1} + \phi_{k2} \rho_{j-2} + \phi_{k3} \rho_{j-3} + \cdots + \phi_{kk} \rho_{j-k} \\ \quad \\
+\Rightarrow\ \begin{cases} 
+\rho_1 =  \phi_{k1} + \phi_{k2} \rho_1 + \phi_{k3} \rho_2+ \cdots + \phi_{kk} \rho_{k-1} \\ 
+\rho_2 =  \phi_{k1} \rho_1 + \phi_{k2} + \phi_{k3} \rho_1+ \cdots + \phi_{kk} \rho_{k-2} \\ 
+\qquad \qquad \qquad \qquad \vdots \\
+\rho_k =  \phi_{k1} \rho_{k-1} + \phi_{k2} \rho_{k-2} + \phi_{k3} \rho_{k-3}+ \cdots + \phi_{kk} \\ 
+\end{cases} \\ \quad \\
+\Rightarrow \phi_{kk} = \frac{\det(D_k)}{\det(D)} \qquad \text{(Cramer's Rule)}
+$$
+
+对于$$\text{AR}(p)$$过程：
+
+$$
+\phi_{pp} = \phi_p
+$$
+
+### 样本偏自相关函数
+
+递归求解方法：
+
+$$
+\phi_{kk} = \frac{\rho_k - \sum\limits_{j=1}^{k-1} \phi_{k-1,j} \rho_{k-j}}{1 -  \sum\limits_{j=1}^{k-1} \phi_{k-1,j} \rho_j}
+$$
+
+其中 $$\phi_{k,j} = \phi_{k-1,j} - \phi_{kk}\phi_{k-1,j-1}, \quad j = 1,2,\cdots, k-1$$。
+
+用$$r$$代替上式中的$$\rho$$就可以得到估计的或样本偏自相关函数。
+
+#### $$\text{AR}(p)$$情况下的假设检验
+
+在$$\text{AR}(p)$$模型是正确的情况下：
+
+$$
+\hat{\phi}_{kk}\ \dot\sim\ N(0, \frac{1}{n})
+$$
+
+**当** $$k>p$$**时，用** $$\pm \Large\frac{2}{\sqrt{n}}$$**作为**$$\hat{\phi}_{kk}$$**的临界极限值来检验**$$\text{AR}(p)$$**模型是正确的零假设。**
+
+### 混合模型
+
+|  | AR\(p\) | MA\(q\) | ARMA\(p,q\) |
+| :--- | :--- | :--- | :--- |
+| ACF | 拖尾 | 滞后q阶截尾 | 拖尾 |
+|  | 滞后p阶截尾 | 拖尾 | 拖尾 |
+| 识别指标 | PACF | ACF | EACF |
+
+### 扩展的自相关函数
 
 
 
