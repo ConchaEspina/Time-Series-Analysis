@@ -203,9 +203,57 @@ e_t(l) &= Y_{t+l} - \hat{Y}_t(l) = Y_{t+l} - \mu - \phi^l(Y_t - \mu) \\
 \Rightarrow\ E(e_t(l)) = 0,\ \text{Var}(e_t(l)) = \frac{1-\phi^{2l}}{1-\phi^2} \sigma_e^2
 $$
 
+ 由上面的结果可以推出如下结论：
+
+* $$\hat{Y}_t(l)$$是无偏估计
+* 当$$l$$很大时，有$$\text{Var}(e_t(l)) \approx \Large\frac{1}{1-\phi^2} \normalsize\sigma_e^2$$或 $$e_t(l) \approx Y_{t+l} \Rightarrow \text{Var}(e_t(l)) \approx \text{Var}(Y_{t+l}) = \gamma_0 = \Large\frac{1}{1-\phi^2} \normalsize\sigma_e^2$$ 
+
+### $$\text{MA}(1)$$ 
+
+#### $$l = 1$$ 
+
+$$
+Y_{t+1} = \mu + e_{t+1} - \theta e_t
+$$
+
+对两边取条件期望，得：
+
+$$
+\hat{Y}_t(1) = \mu + E(e_{t+1} | Y_1, \cdots, Y_t)- \theta E(e_t | Y_1, \cdots, Y_t) = \mu - \theta e_t
+$$
+
+其中 $$E(e_{t+1} | Y_1, \cdots, Y_t) = E(e_{t+1}) = 0,\ E(e_t | Y_1, \cdots, Y_t) = e_t$$（由可逆性得$$e_t$$为 $$Y_1, \cdots, Y_t$$ 的函数）
+
+预测误差：
+
+$$
+e_t(1) = Y_{t+1} - \hat{Y}_t(1) = e_{t+1}
+$$
+
+#### 一般情况
+
+$$
+\hat{Y}_t(l) = \mu + E(e_{t+l} | Y_1, \cdots, Y_t) - \theta E(e_{t+l-1} | Y_1, \cdots, Y_t) \\
+= \mu + E(e_{t+l}) - \theta E(e_{t+l-1}) = \mu, \qquad l>1
+$$
+
+### $$\text{ARMA}(p,q)$$
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+## 预测极限
 
 
 
