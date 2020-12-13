@@ -241,25 +241,39 @@ $$
 
 其中所有的$$X$$是方差为$$\sigma_X^2$$的独立同分布的随机变量，所有的$$e$$是方差为$$\sigma_e^2$$的白噪声序列且独立于$$X$$。
 
-
+$$
+\rho_k(X,Y) = 
+\begin{cases}
+\Large\frac{\beta_1 \sigma_X}{\sqrt{\beta_1^2\sigma_X^2 + \sigma_e^2}}\normalsize,\quad k = -d   \\
+0,\quad k\neq -d
+\end{cases}
+$$
 
 如果$$X$$与$$Y$$独立，即当且仅当$$\beta_1 = 0$$时，有$$r_k(X,Y) \to N(0,\Large\frac{1}{n}\normalsize)$$。
 
 $$|r_k(X,Y)| > \Large\frac{1.96}{\sqrt{n}}$$ → 样本互相关系数显著不为零
 
+### 回归模型2
 
+$$
+Y_t = \beta_0 + \beta_1 X_{t-d} + Z_t
+$$
 
+其中$$Z_t$$满足某一$$\text{ARIMA}(p,d,q)$$模型。
 
+过程$$X$$和$$Y$$中的自相关性导致样本CCF不再渐近服从于 $$N(0,\Large\frac{1}{n}\normalsize)$$ 的分布。
 
+如果$$X$$与$$Y$$均平稳且相互独立（$$\beta_1 = 0$$），则$$\sqrt{n} r_k(X,Y)$$的方差渐近等于 $$1+2\sum\limits_{k=1}^\infty \rho_k(X)\rho_k(Y) $$ ，其中$$\rho_k(X)$$和$$\rho_k(Y)$$分别表示滞后$$k$$上$$X$$和$$Y$$的自相关系数。
 
+假设$$X$$和$$Y$$都是$$\text{AR}(1)$$过程，其$$\text{AR}(1)$$系数分别为$$\phi_X$$和$$\phi_Y$$，那么有
 
+$$
+r_k(X,Y) \to N(0, \frac{1+\phi_X\phi_Y}{n(1-\phi_X\phi_Y)})
+$$
 
+当两个$$\text{AR}(1)$$系数都接近于1时， $$r_k(X,Y)$$的样本方差与名义量值$$\Large\frac{1}{n}$$的比率趋于无穷大。
 
-
-
-
-
-
+非平稳数据的样本互相关系数方差偏大的问题更加严重，且在大样本情况下样本互相关系数的分布也不再近似于正态分布。
 
 ## 预白化与随机回归
 
