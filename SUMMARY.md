@@ -9,6 +9,6 @@
 * [参数估计](parameter-estimation.md)
 * [模型诊断](model-diagnostics.md)
 * [预测](forecasting.md)
+* [季节模型](time-series-regression-models-1.md)
 * [时间序列回归模型](time-series-regression-models.md)
-* [季节模型](seasonal-models.md)
 
