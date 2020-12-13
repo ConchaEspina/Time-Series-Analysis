@@ -239,11 +239,31 @@ $$
 
 ### $$\text{ARMA}(p,q)$$
 
+$$
+\begin{align}
+\hat{Y}_t(l) &= E(Y_{t+l} | Y_1, \cdots, Y_t) \\
+&= \phi_1 \hat{Y}_t(l-1) + \phi_2 \hat{Y}_t(l-2) + \cdots + \phi_p\hat{Y}_t(l-p) + \theta_0 - \theta_1 E(e_{t+l-1} | Y_1, \cdots, Y_t) \\
+&- \theta_2 E(e_{t+l-2} | Y_1, \cdots, Y_t) - \cdots - \theta_q E(e_{t+l-q} | Y_1, \cdots, Y_t) \\
+&= \sum_{i=1}^p \phi_i \hat{Y}_t(l-i) + \theta_0 - \sum_{j=1}^q \theta_j E(e_{t+l-j} | Y_1, \cdots, Y_t)
+\end{align}
+$$
 
+其中 $$E(e_{t+j} | Y_1, \cdots, Y_t) = \begin{cases} 0, \quad j >0 \\ e_{t+j}, \quad j \leq 0 \end{cases},\quad \hat{Y}_t(j) = \begin{cases} \hat{Y}_t(j), \quad j>0 \\ Y_{t+j},\quad j \leq 0   \end{cases}$$ 
 
+#### 特例：$$\text{ARMA}(1,1)$$
 
+$$
+\hat{Y}_t(1) = \phi Y_t + \theta_0 - \theta e_t \\
+\hat{Y}_t(2) = \phi \hat{Y}_t(1) + \theta_0 \\ \quad \\
+\Rightarrow\ \hat{Y}_t(l) = \phi \hat{Y}_t(l-1) + \theta_0, \quad l \geq 2
+$$
 
+$$
+\hat{Y}_t(l) - \frac{\theta_0}{1-\phi} = \phi [\hat{Y}_t(l-1) - \frac{\theta_0}{1-\phi}] \\
+\Rightarrow\ \hat{Y}_t(l) - \mu = \phi [\hat{Y}_t(l-1) - \mu] = \phi^{l-1} [\hat{Y}_t(1) - \mu] = \phi^l (Y_t - \mu) - \phi^{l-1} e_t,\quad l \geq1
+$$
 
+### 截断线性过程
 
 
 
