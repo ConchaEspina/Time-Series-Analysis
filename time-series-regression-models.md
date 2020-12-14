@@ -89,7 +89,7 @@ $$
 逐渐消失且无延迟的干预效应：
 
 $$
-m_t = \delta m_{t-1} + \omega P_t^{(T)} = \omega \delta^{T-t} I(t \geq T)
+m_t = \delta m_{t-1} + \omega P_t^{(T)} = \omega \delta^{t-T} I(t \geq T)
 $$
 
 逐渐消失且有延迟的干预效应：
@@ -312,4 +312,12 @@ $$
 
 1. 运用截断的$$\Large\frac{1.96}{\sqrt{n}}$$，可以评价预白化数据样本CCF的统计显著性
 2. 按照这种方法估计出的CCF所对应的理论值与某些回归系数成比例
+
+{% hint style="info" %}
+$$Y_t = \sum\limits_{j=-\infty}^\infty \beta_j X_{t-j} + Z_t\ \Rightarrow\ \tilde{Y}_t = \sum\limits_{k=-\infty}^\infty \beta_k \tilde{X}_{t-k} + \tilde{Z}_t$$ 
+
+$$\rho_k(\tilde{X},\tilde{Y}) = \text{Corr}(\tilde{X}_{t+k}, \tilde{Y}_t) = \Large\frac{\beta_{-k} \tilde\sigma_X}{\tilde\sigma_Y} $$ 
+{% endhint %}
+
+
 
