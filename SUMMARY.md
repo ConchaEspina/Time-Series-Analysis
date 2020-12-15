@@ -11,5 +11,5 @@
 * [预测](forecasting.md)
 * [季节模型](seasonal-models.md)
 * [时间序列回归模型](time-series-regression-models.md)
-* [异方差时间序列模型](time-series-models-of-heteroscedasticity.md)
+* [条件异方差时间序列模型](time-series-models-of-conditional-heteroscedasticity.md)
 
