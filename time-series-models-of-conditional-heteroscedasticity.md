@@ -12,6 +12,8 @@ description: 课本第12章
 
 > 以CREF日收益率数据为例
 
+对数收益率： $$r_t = \log(p_t) - \log(p_{t-1})$$ 
+
 有效市场的预期收益率（条件均值）应该为零，且收益率序列是一个白噪声序列
 
 ### 波动集群
@@ -22,7 +24,7 @@ description: 课本第12章
 
 波动集群是一种高阶相关结构
 
-收益率的独立同分布或相关性与收益率的平方（绝对值）的独立同分布或相关性是一致的。
+**如果收益率是独立同分布的白噪声，那么它的绝对值和平方值也是独立同分布的白噪声。**
 
 ### 波动率
 
@@ -103,7 +105,7 @@ ARCH \(autoregressive conditional heteroscedasticity\)：自回归条件异方�
 
 $$r_t$$**的条件方差（条件波动率）：** $$\sigma_{t|t-1}^2$$ ****
 
-→ 下标$$t-1$$表示以 $$t-1$$ 时刻前的收益率为条件
+→ 下标$$t-1$$表示以$$t-1$$时刻前的收益率为条件
 
 → $$E(r_t^2) = \sigma_{t|t-1}^2$$ 
 
@@ -121,15 +123,111 @@ E(r_t^2 | r_1, \cdots, r_{t-1}) = E(\sigma_{t|t-1}^2 \epsilon_t^2 | r_1, \cdots,
 = \sigma_{t|t-1}^2 E(\epsilon_t^2 | r_1, \cdots, r_{t-1}) = \sigma_{t|t-1}^2 \cdot 1= \sigma_{t|t-1}^2
 $$
 
+#### 条件方差的替代表示
 
+$$
+\eta_t = r_t^2 - \sigma_{t|t-1}^2 \\
+\Rightarrow\ r_t^2 = \sigma_{t|t-1}^2 + \eta_t = \omega + \alpha r_{t-1}^2 + \eta_t
+$$
 
+$$\eta_t$$的特征：
 
+1. $$\{\eta_t\}$$是均值为零的不相关序列：$$E(\eta_t) = 0, \text{Cov}(\eta_t, \eta_{t-k}) = 0 $$ 
+2. $$\eta_t$$与过去的收益率不相关：$$\text{Cov}(\eta_t, r_{t-k}) = 0$$ 
 
+$$r_t^2 = \omega + \alpha r_{t-1}^2 + \eta_t$$形式的导出结论：
 
+1. $$\omega \geq 0, \alpha \geq 0$$ 
+2. 平稳条件为 $$0 \leq \alpha < 1$$，此时 $$\sigma^2 = \Large\frac{\omega}{1-\alpha}$$ 
 
+#### $$\text{ARCH}(1)$$模型的厚尾分布特征
 
+$$\text{ARCH}(1)$$模型的平稳分布始终为厚尾分布。
+
+#### $$\text{ARCH}(1)$$模型的预测
+
+* 1步向前条件方差
+
+$$
+\sigma_{t+1|t}^2 = \omega + \alpha r_t^2 = (1-\alpha) \sigma^2 + \alpha r_t^2
+$$
+
+* h步向前条件方差
+
+$$
+\begin{align}
+\sigma_{t+h|t}^2 &= E(r_{t+h}^2 | r_t, r_{t-1}, \cdots) = E[E(\sigma_{t+h|t+h-1}^2 \epsilon_{t+h}^2 | r_{r+h-1}, r_{t+h-2}, \cdots) | r_t, r_{t-1}, \cdots] \\
+&= E[\sigma_{t+h|t+h-1}^2 E(\epsilon_{t+h}^2) | r_t, r_{t-1}, \cdots] = E(\sigma_{t+h|t+h-1}^2 | r_t, r_{t-1}, \cdots) \\
+&= E(\omega + \alpha r_{t+h-1}^2 | r_t, r_{t-1}, \cdots) = \omega + \alpha E(r_{t+h-1}^2 | r_t, r_{t-1}, \cdots) \\
+&= \omega + \alpha \sigma_{t+h-1|t}^2
+
+\end{align}
+$$
+
+在$$h<0$$的情况下，$$\sigma_{t+h|t}^2 = r_{t+h}^2$$ 。
+
+### $$\text{ARCH}(q)$$模型
+
+$$
+\sigma_{t|t-1}^2 = \omega +\alpha_1 r_{t-1}^2 + \cdots + \alpha_q r_{t-q}^2
+$$
 
 ## GARCH模型
+
+### $$\text{GARCH}(p,q)$$模型
+
+$$
+\sigma_{t|t-1}^2 = \omega + \beta_1 \sigma_{t-1|t-2}^2 + \cdots + \beta_p \sigma_{t-p|t-p-1}^2 + \alpha_1 r_{t-1}^2 + \cdots + \alpha_q r_{t-q}^2 \\
+\Rightarrow\ (1 - \beta_1 B - \cdots - \beta_p B^p) \sigma_{t|t-1}^2 = \omega + (\alpha_1 B + \cdots + \alpha_q B^q) r_t^2
+$$
+
+#### 条件方差的替代表示
+
+$$
+\begin{align}
+&\eta_t = r_t^2 - \sigma_{t|t-1}^2 \\
+&\Rightarrow\ r_t^2 = \sigma_{t|t-1}^2 + \eta_t \\
+&= \omega + \beta_1 \sigma_{t-1|t-2}^2 + \cdots + 
+\beta_p \sigma_{t-p|t-p-1}^2 + \alpha_1 r_{t-1}^2 + \cdots + \alpha_q r_{t-q}^2 + \eta_t \\
+&= \omega + \beta_1 (r_{t-1}^2 - \eta_{t-1}) + \cdots + \beta_p (r_{t-p}^2 - \eta_{t-p}) + \alpha_1 r_{t-1}^2 + \cdots + \alpha_q r_{t-q}^2 + \eta_t \\
+&= \omega + (\alpha_1 + \beta_1) r_{t-1}^2 + \cdots + (\alpha_k + \beta_k) r_{t-k}^2 + \eta_t - \beta_1 \eta_{n-1} - \cdots - \beta_p \eta_{n-p}
+\end{align}
+$$
+
+其中$$k = \max \{p,q\} \geq p,\ \beta_k=0 (\forall k>p),\ \alpha_k=0(\forall k>q)$$
+
+$$r_t^2 = \omega + (\alpha_1 + \beta_1) r_{t-1}^2 + \cdots + (\alpha_k + \beta_k) r_{t-k}^2 + \eta_t - \beta_1 \eta_{n-1} - \cdots - \beta_p \eta_{n-p}$$的形式蕴含了一个 $$\text{ARMA}(\max\{p,q\},\ p)$$模型。
+
+#### $$\text{GARCH}(p,q)$$模型弱平稳的充要条件
+
+$$
+\begin{align}
+\sigma^2 &= E(r_t^2) \\
+&= E[\omega + (\alpha_1 + \beta_1) r_{t-1}^2 + \cdots + (\alpha_k + \beta_k) r_{t-k}^2 + \eta_t - \beta_1 \eta_{n-1} - \cdots - \beta_p \eta_{n-p}] \\
+& = \omega + \sum_{i=1}^{\max\{p,q\}} (\alpha_i + \beta_i) \sigma^2 \\
+&\Rightarrow\ \sigma^2 = \frac{\omega}{1 - \sum\limits_{i=1}^{\max\{p,q\}} (\alpha_i + \beta_i)}
+\end{align}
+$$
+
+$$\text{GARCH}(p,q)$$模型弱平稳的充要条件为：$$\sum\limits_{i=1}^{\max\{p,q\}} (\alpha_i + \beta_i) < 1$$ 
+
+$$
+\begin{align}
+\sigma^2 &= E(r_t^2) \\
+&= E[\omega + (\alpha_1 + \beta_1) r_{t-1}^2 + \cdots + (\alpha_k + \beta_k) r_{t-k}^2 + \eta_t - \beta_1 \eta_{n-1} - \cdots - \beta_p \eta_{n-p}] \\
+& = \omega + \sum_{i=1}^{\max\{p,q\}} (\alpha_i + \beta_i) \sigma^2 \\
+&\Rightarrow\ \sigma^2 = \frac{\omega}{1 - \sum\limits_{i=1}^{\max\{p,q\}} (\alpha_i + \beta_i)}
+\end{align}
+$$
+
+### GARCH模型识别方法
+
+1. 给出序列的平方值和绝对值的样本EACF矩阵来确定$$\max\{p,q\}$$和 $$p$$
+2. 如果$$p>q$$，则$$q$$会无法识别，可先拟合$$\text{GARCH}(p,p)$$模型，再对所得到的ARCH系数估计量进行显著性检验，从而估计$$q$$
+
+#### $$\text{GARCH}(p,q)$$模型的预测
+
+
 
 
 
