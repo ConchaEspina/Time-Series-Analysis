@@ -177,7 +177,7 @@ $$
 ### $$\text{GARCH}(p,q)$$模型
 
 $$
-\sigma_{t|t-1}^2 = \omega + \beta_1 \sigma_{t-1|t-2}^2 + \cdots + \beta_p \sigma_{t-p|t-p-1}^2 + \alpha_1 r_{t-1}^2 + \cdots + \alpha_q r_{t-q}^2 \\
+\sigma_{t|t-1}^2 = \omega + \beta_1 \sigma_{t-1|t-2}^2 + \cdots + \beta_p \sigma_{t-p|t-p-1}^2 + \alpha_1 r_{t-1}^2 + \cdots + \alpha_q r_{t-q}^2 \\ \quad \\
 \Rightarrow\ (1 - \beta_1 B - \cdots - \beta_p B^p) \sigma_{t|t-1}^2 = \omega + (\alpha_1 B + \cdots + \alpha_q B^q) r_t^2
 $$
 
@@ -211,21 +211,50 @@ $$
 
 $$\text{GARCH}(p,q)$$模型弱平稳的充要条件为：$$\sum\limits_{i=1}^{\max\{p,q\}} (\alpha_i + \beta_i) < 1$$ 
 
-$$
-\begin{align}
-\sigma^2 &= E(r_t^2) \\
-&= E[\omega + (\alpha_1 + \beta_1) r_{t-1}^2 + \cdots + (\alpha_k + \beta_k) r_{t-k}^2 + \eta_t - \beta_1 \eta_{n-1} - \cdots - \beta_p \eta_{n-p}] \\
-& = \omega + \sum_{i=1}^{\max\{p,q\}} (\alpha_i + \beta_i) \sigma^2 \\
-&\Rightarrow\ \sigma^2 = \frac{\omega}{1 - \sum\limits_{i=1}^{\max\{p,q\}} (\alpha_i + \beta_i)}
-\end{align}
-$$
-
 ### GARCH模型识别方法
 
 1. 给出序列的平方值和绝对值的样本EACF矩阵来确定$$\max\{p,q\}$$和 $$p$$
 2. 如果$$p>q$$，则$$q$$会无法识别，可先拟合$$\text{GARCH}(p,p)$$模型，再对所得到的ARCH系数估计量进行显著性检验，从而估计$$q$$
 
-#### $$\text{GARCH}(p,q)$$模型的预测
+### $$\text{GARCH}(1,1)$$模型的预测
+
+$$
+\sigma_{t|t-1}^2 = \omega + \beta \sigma_{t-1|t-2}^2 + \alpha r_{t-1}^2
+$$
+
+平稳方差：
+
+$$
+\sigma^2 = \omega + (\alpha + \beta) \sigma^2 \\ \quad \\
+\Rightarrow\ \sigma^2 = \frac{\omega}{1-\alpha-\beta}
+$$
+
+设定初始条件方差$$\sigma_{1|0}^2 = \sigma^2$$或$$\sigma_{1|0}^2 = r_1^2$$
+
+$$
+\begin{align}
+\sigma_{t+h|t}^2 &= E(r_{t+h}^2 | r_t, r_{t-1} ,\cdots) \\
+&= E[E(\sigma_{t+h|t+h-1}^2 \epsilon_{t+h}^2 | r_{t+h-1}, r_{t+h-2}, \cdots) | r_t, r_{t-1}, \cdots] \\
+&= E(\sigma_{t+h|t+h-1}^2 | r_t, r_{t-1}, \cdots) \\
+&= E(\omega + \beta \sigma_{t+h-1|t+h-2}^2 + \alpha r_{t+h-1}^2 | r_t, r_{t-1}, \cdots) \\
+&= \omega + \beta \sigma_{t+h-1|t}^2 + \alpha \sigma_{t+h-1|t}^2 \\
+&= \omega + (\beta  + \alpha) \sigma_{t+h-1|t}^2
+\end{align}
+$$
+
+### $$\text{GARCH}(1,1)$$模型参数的极大似然估计
+
+$$
+\sigma_{t|t-1}^2 = \omega + \alpha r_{t-1}^2 + \beta \sigma_{t-1|t-2}^2
+$$
+
+其中 $$t \geq 2,\ \sigma_{1|0}^2 = \sigma^2 = \Large\frac{\omega}{1-\alpha-\beta}$$。
+
+假定$$\epsilon_t = \Large\frac{r_t}{\sigma_{t|t-1}}\normalsize\ \text{i.i.d} \sim\ N(0,1)$$ ，有似然函数
+
+$$
+a = b
+$$
 
 
 
@@ -233,9 +262,7 @@ $$
 
 
 
-
-
-
+### 模型诊断
 
 
 
