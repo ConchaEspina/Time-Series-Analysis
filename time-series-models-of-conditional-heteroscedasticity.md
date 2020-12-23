@@ -166,6 +166,12 @@ $$
 
 在$$h<0$$的情况下，$$\sigma_{t+h|t}^2 = r_{t+h}^2$$ 。
 
+{% hint style="info" %}
+$$E(XY|Z) = E[E(XY|Z,W)|Z] = E[XE(Y) | Z] = E(X|Z) E(Y)$$ 
+
+其中 $$X = g(Z,W), Y \perp (Z,W), Z \subseteq W$$ 
+{% endhint %}
+
 ### $$\text{ARCH}(q)$$模型
 
 $$
@@ -291,11 +297,30 @@ $$
 
 #### 独立同分布假设
 
+如果GARCH模型被正确识别，那么标准残差$$\{\epsilon_t\}$$应该是近似独立同分布的。新息的独立同分布假设可以通过$$| \epsilon_t |$$或$$\epsilon_t^2$$的自相关状况（即样本ACF）来检验。
 
+标准残差平方值的自相关函数：
 
+$$
+\hat\rho_k = \text{Corr}(\hat\epsilon_t^2, \hat\epsilon_{t-k}^2) = \frac{\sum\limits_{t=1}^n (\hat\epsilon_t^2 - \bar{\epsilon^2})(\hat\epsilon_{t-k}^2 - \bar{\epsilon^2})}{\sqrt{\sum\limits_{t=1}^n (\hat\epsilon_t^2 - \bar{\epsilon^2})^2} \sqrt{\sum\limits_{t=1}^n (\hat\epsilon_{t-k}^2 - \bar{\epsilon^2})^2}} \\ \quad \\
+\Rightarrow\ \hat\rho_k\ \dot\sim\ N(0, \frac{1}{n})
+$$
 
+原始的混合检验统计量Box-Pierce统计量 $$n \sum\limits_{k=1}^m \hat\rho_k^2$$ 不再渐近服从$$\chi^2_m$$分布。
 
+→ 因为$$\hat\rho_k$$依赖于$$\hat\omega, \hat\alpha, \hat\beta$$
 
+**广义混合检验统计量：**
+
+$$
+n \sum_{i=1}^m \sum_{j=1}^m q_{i,j} \hat\rho_{i,1} \hat\rho_{j,1} \to \chi^2_m
+$$
+
+* $$\hat\rho_{i,1}$$：绝对标准残差的$$i$$阶滞后自相关系数
+* $$\hat\rho_{j,1}$$：标准残差的平方的$$j$$阶滞后自相关系数
+* $$q$$：依赖于滞后$$m$$，可由数据估计得到_（课本附录I）_
+
+**检验方法：**计算滞后阶数$$m$$从1到一定阶数的广义混合检验的p值，**如果所有p值都大于5%，说明残差平方随时间不相关**，因此能够判断标准残差可能是独立的。（在实际当中如果有极少量p值低于5%也可以认定独立）
 
 
 
