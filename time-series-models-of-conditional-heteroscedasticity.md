@@ -253,16 +253,43 @@ $$
 假定$$\epsilon_t = \Large\frac{r_t}{\sigma_{t|t-1}}\normalsize\ \text{i.i.d} \sim\ N(0,1)$$ ，有似然函数
 
 $$
-a = b
+L(\omega, \alpha, \beta | r_1, \cdots, r_n) = f(r_1, \cdots, r_n | \omega, \alpha, \beta) \\
+= \prod_{t=1}^n f(r_t | r_{t-1}, \cdots, r_1) = \prod_{t=1}^n f(\epsilon_t) \frac{\partial \epsilon_t}{\partial r_t} = \prod_{t=1}^n f(\epsilon_t) \frac{1}{\sigma_{t|t-1}} \\
+= \prod_{t=1}^n \frac{1}{\sqrt{2\pi}} \exp\{-\frac{\epsilon_t^2}{2}\} \frac{1}{\sigma_{t|t-1}} = \prod_{t=1}^n \frac{1}{\sqrt{2\pi \sigma_{t|t-1}^2}} \exp\{-\frac{r_t^2}{2\sigma_{t|t-1}^2}\} \\ \quad \\
+\Rightarrow\ \hat\omega, \hat\alpha, \hat\beta = \arg \max\ L(\omega, \alpha, \beta)
 $$
 
+极大似然估计量近似服从均值为真值的正态分布。
 
+#### 准极大似然估计（QMLE）
 
+在新息服从正态分布的假设下（即使实际上不服从）得到的似然函数称为高斯似然函数，极大化高斯似然函数得出的估计量称作**准极大似然估计（QMLE）**。
 
+准极大似然估计量近似服从正态分布，围绕于参数真实值周围，其协方差阵为$$\Large\frac{\kappa+2}{2}\normalsize\Lambda$$，其中 $$\kappa$$是新息的（额外的）峰度，在估计中可用标准残差样本峰度来替代，$$\Lambda$$是假设新息为正态分布时的协方差阵。
 
+严格来说AIC并不适用于QMLE。
 
+#### 标准残差
+
+$$
+\hat\epsilon_t = \frac{r_t}{\hat\sigma_{t|t-1}}
+$$
+
+其中 $$\hat\sigma_{t|t-1}$$是条件标准误差的估计值。
+
+→ 可作为新息的代理变量
 
 ### 模型诊断
+
+**如果模型被正确识别，那么标准残差**$$\{\hat\epsilon_t\}$$**是近似独立同分布的。**
+
+#### 正态性
+
+* QQ图
+* Shapiro-Wilk检验_（p-value&lt;0.05时拒绝正态性假设）_
+* Jarque-Bera检验_（p-value&lt;0.05时拒绝正态性假设）_
+
+#### 独立同分布假设
 
 
 
