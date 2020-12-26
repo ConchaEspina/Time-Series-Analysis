@@ -194,10 +194,12 @@ Y_t = \mu + e_t + \phi e_{t-1} + \phi^2 e_{t-2} + \cdots
 $$
 
 $$
-e_t(\ell) = Y_{t+\ell} - \hat{Y}_t(\ell) = Y_{t+\ell} - \mu - \phi^\ell(Y_t - \mu) \\
-= (e_{t+\ell} + \phi e_{t+\ell-1} + \phi^2 e_{t+\ell-2} + \cdots) - \phi^\ell (e_t + \phi e_{t-1} + \phi^2 e_{t-2} + \cdots)  \\
-= e_{t+\ell} + \phi e_{t+\ell-1} + \phi^2 e_{t+\ell-2} + \cdots + \phi^{\ell-1} e_{t+1}\\
-\Rightarrow\ E(e_t(\ell)) = 0,\ \text{Var}(e_t(\ell)) = \frac{1-\phi^{2\ell}}{1-\phi^2} \sigma_e^2
+\begin{align}
+e_t(\ell) &= Y_{t+\ell} - \hat{Y}_t(\ell) = Y_{t+\ell} - \mu - \phi^\ell(Y_t - \mu) \\
+&= (e_{t+\ell} + \phi e_{t+\ell-1} + \phi^2 e_{t+\ell-2} + \cdots) - \phi^\ell (e_t + \phi e_{t-1} + \phi^2 e_{t-2} + \cdots)  \\
+&= e_{t+\ell} + \phi e_{t+\ell-1} + \phi^2 e_{t+\ell-2} + \cdots + \phi^{\ell-1} e_{t+1}\\
+\Rightarrow\ &E(e_t(\ell)) = 0,\ \text{Var}(e_t(\ell)) = \frac{1-\phi^{2\ell}}{1-\phi^2} \sigma_e^2
+\end{align}
 $$
 
  由上面的结果可以推出如下结论：
@@ -256,8 +258,11 @@ $$
 $$
 
 $$
-\hat{Y}_t(l) - \frac{\theta_0}{1-\phi} = \phi [\hat{Y}_t(l-1) - \frac{\theta_0}{1-\phi}] \\
-\Rightarrow\ \hat{Y}_t(l) - \mu = \phi [\hat{Y}_t(l-1) - \mu] = \phi^{l-1} [\hat{Y}_t(1) - \mu] = \phi^l (Y_t - \mu) - \phi^{l-1} e_t,\quad l \geq1
+\begin{align}
+&\hat{Y}_t(\ell) - \frac{\theta_0}{1-\phi} = \phi [\hat{Y}_t(\ell-1) - \frac{\theta_0}{1-\phi}] \\
+\Rightarrow\ &\hat{Y}_t(\ell) - \mu = \phi [\hat{Y}_t(\ell-1) - \mu] = \phi^{\ell-1} [\hat{Y}_t(1) - \mu] \\
+&= \phi^\ell (Y_t - \mu) - \phi^{\ell-1} e_t,\quad \ell \geq1 
+\end{align}
 $$
 
 ### 截断线性过程
