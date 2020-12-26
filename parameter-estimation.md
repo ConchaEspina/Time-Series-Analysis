@@ -130,49 +130,99 @@ $$
 
 ### 自回归模型
 
+#### $$\text{AR}(1)$$模型
 
+$$
+Y_t - \mu = \phi(Y_{t-1} - \mu) + e_t \\
+\Rightarrow\ S_c(\phi,\mu) = \sum_{t=2}^n [(Y_t - \mu) - \phi(Y_{t-1} - \mu)]^2
+$$
 
+$$
+\frac{\partial S_c}{\partial \mu} = \sum_{t=2}^n 2[(Y_t - \mu) - \phi(Y_{t-1} - \mu)] (-1+\phi) = 0 \\
+\Rightarrow\ \hat\mu = \frac{1}{(n-1)(1-\phi)} [\sum_{t=2}^n Y_t - \phi \sum_{t=2}^n Y_{t-1}] \\
+= \frac{1}{1-\phi} [\frac{1}{1-n} \sum_{t=2}^n Y_t - \frac{\phi}{1-n} \sum_{t=2}^n Y_{t-1}] \\
+\approx \frac{1}{1-\phi} (\bar{Y} - \phi \bar{Y}) = \bar{Y} \\ \quad \\
+\Rightarrow\ \hat\mu \approx \bar{Y}
+$$
 
+$$
+\frac{\partial  S_c}{\partial \phi} = - \sum_{t=2}^n 2[(Y_t - \mu) - \phi(Y_{t-1} - \mu)] (Y_{t-1} - \mu) = 0 \\
+\Rightarrow\ \hat\phi = \frac{\sum\limits_{t=2}^n (Y_t - \hat\mu)(Y_{t-1} - \hat\mu)}{\sum\limits_{t=2}^n (Y_{t-1} - \hat\mu)^2} \approx \frac{\sum\limits_{t=2}^n (Y_t - \bar{Y})(Y_{t-1} - \bar{Y})}{\sum\limits_{t=2}^n (Y_{t-1} - \bar{Y})^2} \approx r_1
+$$
 
+#### $$\text{AR}(p)$$模型
 
+$$
+\hat\mu = \bar{Y}
+$$
 
-
-
-
-
-
-
-
+$$
+\begin{cases}
+\phi_1 + r_1 \phi_2 + r_2 \phi_3 + \cdots + r_{p-1} \phi_p = r_1 \\
+r_1 \phi_1 + \phi_2 + r_1 \phi_3 + \cdots + r_{p-2} \phi_p = r_2 \\
+\qquad \qquad \qquad \qquad \vdots \\
+r_{p-1} \phi_1 + r_{p-2} \phi_2 + r_{p-3} \phi_3 + \cdots + \phi_p = r_p
+\end{cases} \\ \quad \\
+\Rightarrow\ \hat\phi_1, \hat\phi_2, \dots, \hat\phi_p
+$$
 
 ### 滑动平均模型
 
+#### $$\text{MA}(1)$$模型
 
+$$
+Y_t = e_t - \theta e_{t-1} \\
+\Rightarrow\ Y_t + \theta Y_{t-1} + \theta^2 Y_{t-2} + \cdots = e_t \\
+\Rightarrow\ S_c(\theta) = \sum (e_t)^2 = \sum [Y_t + \theta Y_{t-1} + \theta^2 Y_{t-2} + \cdots]^2
+$$
 
+→ 需要使用数值优化方法求解
 
+#### $$\text{MA}(q)$$模型
 
-
-
-
-
-
-
-
+思路与$$\text{MA}(1)$$模型类似，需要用到数值优化方法。
 
 ### 混合模型
 
+#### $$\text{ARMA}(1,1)$$模型
 
+$$
+Y_t = \phi Y_{t-1} + e_t -\theta e_{t-1} \\
+\Rightarrow\ e_t = Y_t - \phi Y_{t-1} + \theta e_{t-1} \\
+\Rightarrow\ S_c(\phi,\theta) = \sum_{t=2}^n e_t^2
+$$
 
+$$
+\arg\limits_{\phi,\theta} \min S_c(\phi,\theta)
+$$
 
+#### $$\text{ARMA}(p,q)$$模型
 
+$$
+\ e_t = Y_t - \phi_1 Y_{t-1} - \cdots - \phi_p Y_{t-p} + \theta_1 e_{t-1} + \cdots + \theta_q e_{t-q} \\
+\Rightarrow\ S_c(\phi_1, \dots, \phi_p, \theta_1, \dots, \theta_q) = \sum_{t=2}^n e_t^2
+$$
 
+$$
+\arg\limits_{\phi_1, \dots, \phi_p, \theta_1, \dots, \theta_q} \min S_c(\phi_1, \dots, \phi_p, \theta_1, \dots, \theta_q)
+$$
 
-
-
-
-
-
+→ 利用数值算法求解
 
 ## 极大似然与无条件最小二乘
+
+* 优点：
+  * 利用了数据包含的所有信息
+  * 可在一般条件下得出许多大样本结论
+* 缺点：需要运用具体的联合密度函数
+
+
+
+
+
+
+
+
 
 
 
