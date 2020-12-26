@@ -107,10 +107,10 @@ $$
 
 ### 时间序列的最小均方误差预测
 
-基于时间序列可获得的历史数据$$Y_1, Y_2, \cdots, Y_t$$，预测未来$$l$$期的值$$Y_{t+l}$$，称时间$$t$$为预测起点，$$l$$为预测前置时间，得到最小均方误差预测值：
+基于时间序列可获得的历史数据$$Y_1, Y_2, \cdots, Y_t$$，预测未来$$\ell$$期的值$$Y_{t+l}$$，称时间$$t$$为预测起点，$$\ell$$为预测前置时间，得到最小均方误差预测值：
 
 $$
-\hat{Y}_t(l) = E(Y_{t+l}|Y_1, Y_2, \cdots, Y_t)
+\hat{Y}_t(\ell) = E(Y_{t+\ell}|Y_1, Y_2, \cdots, Y_t)
 $$
 
 ## 确定性趋势
@@ -119,13 +119,12 @@ $$
 Y_t = \mu_t + X_t
 $$
 
-其中$$X_t$$是方差为$$\gamma_0$$的白噪声。
+其中$$X_t$$是均值为0、方差为$$\gamma_0$$的白噪声。
 
 $$
-\begin{align}
-\hat{Y}_t(l) &= E(\mu_{t+l}+X_{t+l}\ |\ Y_1, \cdots, Y_t) = E(\mu_{t+l}\ |\ Y_1, \cdots, Y_t) + E(X_{t+l}\ |\ Y_1, \cdots, Y_t) \\
-&= \mu_{t+l} + E(X_{t+l}) = \mu_{t+l}
-\end{align}
+\hat{Y}_t(\ell) = E(\mu_{t+\ell} + X_{t+\ell}\ |\ Y_1, \cdots, Y_t) \\
+= E(\mu_{t+\ell}\ |\ Y_1, \cdots, Y_t) + E(X_{t+\ell}\ |\ Y_1, \cdots, Y_t) \\
+= \mu_{t+\ell} + E(X_{t+\ell}) = \mu_{t+\ell}
 $$
 
 ### 趋势示例
@@ -133,31 +132,31 @@ $$
 #### 线性趋势
 
 $$
-\hat{Y}_t(l) = \mu_{t+l} = \beta_0 + \beta_1 (t+l)
+\hat{Y}_t(\ell) = \mu_{t+\ell} = \beta_0 + \beta_1 (t+\ell)
 $$
 
 #### 季节模型
 
 $$
-\hat{Y}_t(l) = \mu_{t+l} = \mu_{t+s+l} = \hat{Y}_t(l+s)
+\hat{Y}_t(\ell) = \mu_{t+\ell} = \mu_{t+s+\ell} = \hat{Y}_t(\ell+s)
 $$
 
 ### 预测误差
 
 $$
-e_t(l) = Y_{t+l} - \hat{Y}_t(l) = \mu_{t+l} + X_{t+l} - \mu_{t+l} = X_{t+l}
+e_t(\ell) = Y_{t+\ell} - \hat{Y}_t(\ell) = \mu_{t+\ell} + X_{t+\ell} - \mu_{t+\ell} = X_{t+\ell}
 $$
 
 #### 预测误差的性质
 
-* 期望：$$E(e_t(l)) = 0$$ → $$\hat{Y}_t(l)$$无偏
-* 方差： $$\text{Var}(e_t(l)) = \gamma_0$$ 
+* 期望：$$E(e_t(\ell)) = 0$$ → $$\hat{Y}_t(\ell)$$无偏
+* 方差： $$\text{Var}(e_t(\ell)) = \gamma_0$$ 
 
 ## ARIMA预测
 
 ### $$\text{AR}(1)$$ 
 
-#### $$l = 1$$ 
+#### $$\ell = 1$$ 
 
 $$
 Y_{t+1} - \mu = \phi(Y_t - \mu) + e_{t+1}
@@ -181,12 +180,12 @@ $$
 #### 一般情况
 
 $$
-\hat{Y}_t(l) = \phi[E(Y_{t+l-1} | Y_1, \cdots, Y_t) - \mu] + E(e_{t+l-1} | Y_1, \cdots, Y_t) + \mu \\
-= \phi [\hat{Y}_t(l-1) - \mu] + \mu = \phi^2 [\hat{Y}_t(l-2) - \mu] + \mu \\
-= \cdots = \phi^{l-1} [\hat{Y}_t(1) - \mu] + \mu = \phi^l (Y_t - \mu) + \mu
+\hat{Y}_t(\ell) = \phi[E(Y_{t+\ell-1} | Y_1, \cdots, Y_t) - \mu] + E(e_{t+\ell-1} | Y_1, \cdots, Y_t) + \mu \\
+= \phi [\hat{Y}_t(\ell-1) - \mu] + \mu = \phi^2 [\hat{Y}_t(\ell-2) - \mu] + \mu \\
+= \cdots = \phi^{\ell-1} [\hat{Y}_t(1) - \mu] + \mu = \phi^\ell (Y_t - \mu) + \mu
 $$
 
-因为$$|\phi|<1$$，所以当$$l$$很大的时候，有$$\hat{Y}_t(l) \approx \mu$$。
+因为$$|\phi|<1$$，所以当$$\ell$$很大的时候，有$$\hat{Y}_t(\ell) \approx \mu$$。
 
 预测误差：
 
@@ -195,22 +194,20 @@ Y_t = \mu + e_t + \phi e_{t-1} + \phi^2 e_{t-2} + \cdots
 $$
 
 $$
-\begin{align}
-e_t(l) &= Y_{t+l} - \hat{Y}_t(l) = Y_{t+l} - \mu - \phi^l(Y_t - \mu) \\
-&= (e_{t+l} + \phi e_{t+l-1} + \phi^2 e_{t+l-2} + \cdots) - \phi^l (e_t + \phi e_{t-1} + \phi^2 e_{t-2} + \cdots) \\
-&= e_{t+l} + \phi e_{t+l-1} + \phi^2 e_{t+l-2} + \cdots + \phi^{l-1} e_{t+1}
-\end{align} \\ \quad \\
-\Rightarrow\ E(e_t(l)) = 0,\ \text{Var}(e_t(l)) = \frac{1-\phi^{2l}}{1-\phi^2} \sigma_e^2
+e_t(\ell) = Y_{t+\ell} - \hat{Y}_t(\ell) = Y_{t+\ell} - \mu - \phi^\ell(Y_t - \mu) \\
+= (e_{t+\ell} + \phi e_{t+\ell-1} + \phi^2 e_{t+\ell-2} + \cdots) - \phi^\ell (e_t + \phi e_{t-1} + \phi^2 e_{t-2} + \cdots)  \\
+= e_{t+\ell} + \phi e_{t+\ell-1} + \phi^2 e_{t+\ell-2} + \cdots + \phi^{\ell-1} e_{t+1}\\
+\Rightarrow\ E(e_t(\ell)) = 0,\ \text{Var}(e_t(\ell)) = \frac{1-\phi^{2\ell}}{1-\phi^2} \sigma_e^2
 $$
 
  由上面的结果可以推出如下结论：
 
-* $$\hat{Y}_t(l)$$是无偏估计
-* 当$$l$$很大时，有$$\text{Var}(e_t(l)) \approx \Large\frac{1}{1-\phi^2} \normalsize\sigma_e^2$$或 $$e_t(l) \approx Y_{t+l} \Rightarrow \text{Var}(e_t(l)) \approx \text{Var}(Y_{t+l}) = \gamma_0 = \Large\frac{1}{1-\phi^2} \normalsize\sigma_e^2$$ 
+* $$\hat{Y}_t(\ell)$$是无偏估计
+* 当$$\ell$$很大时，有$$\text{Var}(e_t(\ell)) \approx \Large\frac{1}{1-\phi^2} \normalsize\sigma_e^2$$或 $$e_t(\ell) \approx Y_{t+\ell} \Rightarrow \text{Var}(e_t(\ell)) \approx \text{Var}(Y_{t+\ell}) = \gamma_0 = \Large\frac{1}{1-\phi^2} \normalsize\sigma_e^2$$ 
 
 ### $$\text{MA}(1)$$ 
 
-#### $$l = 1$$ 
+#### $$\ell = 1$$ 
 
 $$
 Y_{t+1} = \mu + e_{t+1} - \theta e_t
@@ -233,8 +230,8 @@ $$
 #### 一般情况
 
 $$
-\hat{Y}_t(l) = \mu + E(e_{t+l} | Y_1, \cdots, Y_t) - \theta E(e_{t+l-1} | Y_1, \cdots, Y_t) \\
-= \mu + E(e_{t+l}) - \theta E(e_{t+l-1}) = \mu, \qquad l>1
+\hat{Y}_t(\ell) = \mu + E(e_{t+\ell} | Y_1, \cdots, Y_t) - \theta E(e_{t+\ell-1} | Y_1, \cdots, Y_t) \\
+= \mu + E(e_{t+\ell}) - \theta E(e_{t+\ell-1}) = \mu, \qquad \ell>1
 $$
 
 ### $$\text{ARMA}(p,q)$$
