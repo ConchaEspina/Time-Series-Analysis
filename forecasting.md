@@ -240,10 +240,10 @@ $$
 
 $$
 \begin{align}
-\hat{Y}_t(l) &= E(Y_{t+l} | Y_1, \cdots, Y_t) \\
-&= \phi_1 \hat{Y}_t(l-1) + \phi_2 \hat{Y}_t(l-2) + \cdots + \phi_p\hat{Y}_t(l-p) + \theta_0 - \theta_1 E(e_{t+l-1} | Y_1, \cdots, Y_t) \\
-&- \theta_2 E(e_{t+l-2} | Y_1, \cdots, Y_t) - \cdots - \theta_q E(e_{t+l-q} | Y_1, \cdots, Y_t) \\
-&= \sum_{i=1}^p \phi_i \hat{Y}_t(l-i) + \theta_0 - \sum_{j=1}^q \theta_j E(e_{t+l-j} | Y_1, \cdots, Y_t)
+\hat{Y}_t(\ell) &= E(Y_{t+\ell} | Y_1, \cdots, Y_t) \\
+&= \phi_1 \hat{Y}_t(\ell-1) + \phi_2 \hat{Y}_t(\ell-2) + \cdots + \phi_p\hat{Y}_t(\ell-p) + \theta_0 - \theta_1 E(e_{t+\ell-1} | Y_1, \cdots, Y_t) \\
+&- \theta_2 E(e_{t+\ell-2} | Y_1, \cdots, Y_t) - \cdots - \theta_q E(e_{t+\ell-q} | Y_1, \cdots, Y_t) \\
+&= \sum_{i=1}^p \phi_i \hat{Y}_t(\ell-i) + \theta_0 - \sum_{j=1}^q \theta_j E(e_{t+\ell-j} | Y_1, \cdots, Y_t)
 \end{align}
 $$
 
@@ -254,7 +254,7 @@ $$
 $$
 \hat{Y}_t(1) = \phi Y_t + \theta_0 - \theta e_t \\
 \hat{Y}_t(2) = \phi \hat{Y}_t(1) + \theta_0 \\ \quad \\
-\Rightarrow\ \hat{Y}_t(l) = \phi \hat{Y}_t(l-1) + \theta_0, \quad l \geq 2
+\Rightarrow\ \hat{Y}_t(\ell) = \phi \hat{Y}_t(\ell-1) + \theta_0, \quad l \geq 2
 $$
 
 $$
@@ -268,7 +268,7 @@ $$
 ### 截断线性过程
 
 $$
-Y_{t+\ell} = C_t(\ell) + I_t(\ell),\quad \ell \geq 1
+Y_{t+\ell} = C_t(\ell) + I_t(\ell),\quad \ell > 1
 $$
 
 其中$$C_t(\ell)$$包括常数项以及 $$Y_1, \dots, Y_t, e_1, \dots, e_t$$，$$I_t(\ell)$$包括 $$e_{t+1}, \dots, e_{t+\ell}$$
@@ -279,7 +279,7 @@ E[C_t(\ell) | Y_1, \cdots, Y_t] = C_t(\ell) \\
 E[I_t(\ell) | Y_1, \cdots, Y_t] = 0
 \end{cases} \\ \quad \\
 \Rightarrow\ \hat{Y}_t(\ell) = E[Y_{t+\ell} | Y_1, \cdots, Y_t] = C_t(\ell), \\
-\hat{e}_t(\ell) = Y_{t+\ell} - \hat{Y}_t(\ell) = I_t(\ell)
+e_t(\ell) = Y_{t+\ell} - \hat{Y}_t(\ell) = I_t(\ell)
 $$
 
 #### $$C_t(\ell), I_t(\ell)$$的求解方法
@@ -305,6 +305,11 @@ $$
 I_t(\ell) = \phi_1 I_t(\ell-1) + \cdots + \phi_p I_t(\ell-p) + e_{t+\ell}^\prime - \theta_1 e_{t+\ell-1}^\prime - \cdots - \theta_q e_{t+\ell-q}^\prime \\
 \Rightarrow\ \phi(B) I_t(\ell) = \theta(B) e_{t+\ell}^\prime \\
 \Rightarrow\ I_t(\ell) = \frac{\theta(B)}{\phi(B)} e_{t+\ell}^\prime = \psi(B) e_{t+\ell}^\prime = e_{t+\ell} + \psi_1 e_{t+\ell-1} + \cdots + \psi_{\ell-1} e_{t+1}
+$$
+
+$$
+E[e_t(\ell)] = E[I_t(\ell)] = 0 \\
+\text{Var}[e_t(\ell)] = \sigma_e^2 \sum_{j=0}^{\ell-1} \psi_j^2 \Rightarrow \lim_{\ell \to \infty} \text{Var}[e_t(\ell)] = \sigma_e^2 \sum_{j=0}^{\infty} \psi_j^2 \approx \gamma_0
 $$
 
 * $$\ell > q$$条件下$$C_t(\ell)$$的形式
@@ -347,8 +352,77 @@ $$
 \Rightarrow\ (1-B)^d \frac{\theta_0 \ell^d}{d!} = \theta_0 = (1-B)^d C_t(\ell)
 $$
 
+### 非平稳模型
+
+$$\text{ARIMA}(p,1,q)$$模型可以写成一个$$\text{ARMA}(p+1,q)$$模型的形式
+
+$$
+\nabla Y_t = \phi_1 \nabla Y_{t-1} + \cdots + \phi_p \nabla Y_{t-p} + e_t - \theta_1 e_{t-1} - \cdots - \theta_qe_{t-q} \\ \quad \\
+\Rightarrow\ Y_t = \varphi_1 Y_{t-1} + \varphi_2 Y_{t-2} + \cdots + \varphi_p Y_{t-p} \\
++ \varphi_{p+1} Y_{t-p-1} + e_t - \theta_1 e_{t-1} - \cdots - \theta_qe_{t-q}
+$$
+
+其中 $$\varphi_1 = 1 + \phi_1,\ \varphi_j = \phi_j - \phi_{j-1}\ (j=1,\dots,p), \varphi_{p+1} = -\phi_p$$ 
+
+类似地，$$\text{ARIMA}(p,d,q)$$模型可以写成一个$$\text{ARMA}(p+d,q)$$模型的形式，有$$p+d$$个$$\varphi$$系数，之后采用ARMA模型的预测方法即可。
+
+#### 特例：$$\text{ARIMA}(1,1,1)$$
+
+$$
+Y_t = (1+\phi) Y_{t-1} - \phi Y_{t-2} + \theta_0 + e_t -\theta e_{t-1} \\ \quad \\
+\Rightarrow \begin{cases}
+\hat{Y}_t(1) = (1+\phi) Y_t - \phi Y_{t-1} + \theta_0  -\theta e_t \\
+\hat{Y}_t(2) = (1+\phi) \hat{Y}_t(1) - \phi Y_t + \theta_0 \\
+\hat{Y}_t(\ell) =  (1+\phi) \hat{Y}_t(\ell-1) - \phi \hat{Y}_t(\ell-2) + \theta_0 
+\end{cases}
+$$
+
 ## 预测极限
 
+### 确定性趋势
+
+$$
+Y_t = \mu_t + X_t
+$$
+
+假设白噪声随机项$$X_t\ \text{i.i.d.}\sim N(0, \gamma_0) $$ 
+
+$$
+\hat{Y}_t(\ell) = \mu_{t+\ell} \\
+e_t(\ell) = Y_{t+\ell} - \hat{Y}_t(\ell) = X_{t+\ell} \\ \quad \\
+\Rightarrow\ [Y_{t+\ell} - \hat{Y}_t(\ell)]\ \text{i.i.d.}\sim N(0,\gamma_0)
+$$
+
+对给定的置信水平$$1-\alpha$$，有：
+
+$$
+P[-z_{1-\frac{\alpha}{2}} < \frac{Y_{t+\ell} - \hat{Y}_t(\ell)}{\sqrt{\text{Var}(e_t(\ell))}} < z_{1-\frac{\alpha}{2}}] = 1-\alpha
+$$
+
+故有可信度为$$(1-\alpha)100\%$$的预测极限：
+
+$$
+\hat{Y}_t(\ell) \pm z_{1-\frac{\alpha}{2}} \sqrt{\text{Var}(e_t(\ell))}
+$$
+
+### ARIMA模型
+
+如果白噪声独立地来自某正态分布，那么预测误差也服从正态分布。
+
+$$
+E[e_t(\ell)] = E[I_t(\ell)] = 0 \\
+\text{Var}[e_t(\ell)] = \sigma_e^2 \sum_{j=0}^{\ell-1} \psi_j^2 \\ \quad \\
+\Rightarrow Y_{t+\ell} - \hat{Y}_t(\ell) \sim N(0, 
+\text{Var}(e_t(\ell)))
+$$
+
+可信度为$$(1-\alpha)100\%$$的预测极限同样为：
+
+$$
+\hat{Y}_t(\ell) \pm z_{1-\frac{\alpha}{2}} \sqrt{\text{Var}(e_t(\ell))}
+$$
+
+## ARIMA预测的更新
 
 
 
@@ -360,6 +434,9 @@ $$
 
 
 
+
+
+## 某些ARIMA模型预测的总结
 
 
 
