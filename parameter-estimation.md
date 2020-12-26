@@ -268,6 +268,8 @@ $$
 
 当$$n$$较大时，估计量**近似无偏且服从正态分布**。
 
+下列方差和相关系数由修改后的极大似然估计理论得到。
+
 ### 自回归模型
 
 #### $$\text{AR}(1)$$模型
@@ -276,6 +278,8 @@ $$
 \hat\phi\ \dot\sim\ N(\phi, \frac{1-\phi^2}{n})
 $$
 
+当$$\phi$$趋于$$\pm 1$$时，其估计量的方差会随之变小。
+
 #### $$\text{AR}(2)$$模型
 
 $$
@@ -283,7 +287,40 @@ $$
 \text{Corr}(\hat{\phi}_1, \hat{\phi}_2) \approx -\frac{\phi_1}{1-\phi_2} = -\rho_1
 $$
 
+### 滑动平均模型
 
+#### $$\text{MA}(1)$$模型
+
+$$
+\hat{\theta}\ \dot\sim\ N(\theta, \frac{1-\theta^2}{n})
+$$
+
+{% hint style="info" %}
+通过矩估计得到的$$\hat\theta$$的方差显著大于通过极大似然估计得到的估计量的方差，因此不建议对任何带有滑动平均部分的模型采用矩估计作为参数估计方法。
+{% endhint %}
+
+#### $$\text{MA}(2)$$模型
+
+$$
+\text{Var}(\hat{\theta}_1) \approx \text{Var}(\hat{\theta}_2) \approx \frac{1-\theta_2^2}{n} \\
+\text{Corr}(\hat{\theta}_1, \hat{\theta}_2) \approx -\frac{\theta_1}{1-\theta_2}
+$$
+
+### 混合模型
+
+#### $$\text{ARMA}(1,1)$$模型
+
+$$
+\text{Var}(\hat{\phi}) \approx [\frac{1-\phi^2}{n}][\frac{1-\phi\theta}{\phi-\theta}]^2 \\
+\text{Var}(\hat{\theta}) \approx [\frac{1-\theta^2}{n}][\frac{1-\phi\theta}{\phi-\theta}]^2 \\
+\text{Corr}(\hat{\phi}, \hat{\theta}) \approx \frac{\sqrt{(1-\phi^2)(1-\theta^2)}}{1-\phi\theta} \\
+$$
+
+当$$\phi$$和$$\theta$$的值十分相近时，它们的估计量的可变性会非常大。
+
+{% hint style="warning" %}
+过度拟合会损伤对低阶项参数的估计，因为高阶项（冗余项）的系数实际上是0。
+{% endhint %}
 
 
 
