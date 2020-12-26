@@ -216,23 +216,72 @@ $$
   * 可在一般条件下得出许多大样本结论
 * 缺点：需要运用具体的联合密度函数
 
+### 极大似然估计
 
+#### $$\text{AR}(1)$$模型
 
+假设：$$e_t\ \text{i.i.d} \sim N(0, \sigma_e^2)$$ 
 
+$$
+f(e_t) = (2\pi \sigma_e^2)^{-\frac{1}{2}} \exp(-\frac{e_t^2}{2\sigma_e^2}) \\
+f(e_2, e_3, \cdots, e_n) = (2\pi \sigma_e^2)^{-\frac{n-1}{2}} \exp(-\frac{1}{2\sigma_e^2} \sum_{t=2}^n e_t^2)
+$$
 
+令$$Y_1 = y_1,\ Y_1 \sim N(\mu, \Large\frac{\sigma_e^2}{1-\phi^2}\normalsize)$$ 
 
+$$
+Y_t - \mu - \phi(Y_{t-1} - \mu) = e_t \\
+\Rightarrow\ f(y_2, y_3, \cdots, y_n | y_1) = (2\pi \sigma_e^2)^{-\frac{n-1}{2}} \exp\huge\{\normalsize-\frac{1}{2\sigma_e^2} \sum_{t=2}^n [y_t - \mu - \phi(y_{t-1} - \mu)]^2\huge\}\normalsize \\
+\Rightarrow\ f(y_1, y_2,\cdots, y_n) = (2\pi \sigma_e^2)^{-\frac{n}{2}} (1 - \phi^2)^{\frac{1}{2}} \exp\huge\{\normalsize-\frac{1}{2\sigma_e^2} \sum_{t=2}^n [y_t - \mu - \phi(y_{t-1} - \mu)]^2 \\- \frac{1-\phi^2}{2\sigma_e^2}(y_1-\mu)^2 \huge\}\normalsize = (2\pi \sigma_e^2)^{-\frac{n}{2}} (1 - \phi^2)^{\frac{1}{2}} \exp\huge[\normalsize-\frac{1}{2\sigma_e^2} S(\phi, \mu) \huge]\normalsize
+$$
 
+$$
+L(\phi, \mu, \sigma_e^2) = (2\pi \sigma_e^2)^{-\frac{n}{2}} (1 - \phi^2)^{\frac{1}{2}} \exp\huge[\normalsize-\frac{1}{2\sigma_e^2} S(\phi, \mu) \huge]\normalsize \\
+\ell(\phi, \mu, \sigma_e^2) = -\frac{n}{2} \log(2\pi) -\frac{n}{2} \log(\sigma_e^2) + \frac{1}{2} \log(1-\phi^2) - \frac{1}{2\sigma_e^2} S(\phi, \mu)
+$$
 
+$$
+\frac{\partial\ \ell(\phi, \mu, \sigma_e^2)}{\partial \sigma_e^2} = -\frac{n}{2\sigma_e^2} + \frac{S(\phi,\mu)}{2(\sigma_e^2)^2} = 0 \\ \quad \\
+\Rightarrow\ \hat{\sigma}_e^2 = \frac{S(\hat\phi, \hat\mu)}{n}
+$$
 
+#### $$S(\phi,\mu)$$与$$S_c(\phi,\mu)$$的关系
 
+$$
+S(\phi,\mu) = \sum_{t=2}^n [Y_t - \mu - \phi(Y_{t-1} - \mu)]^2 + (1-\phi^2)(Y_1-\mu)^2 \\
+= S_c(\phi,\mu) + (1-\phi^2)(Y_1-\mu)^2
+$$
 
+在大样本条件下，$$S(\phi,\mu)$$和$$S_c(\phi,\mu)$$的值非常接近，使得$$S(\phi,\mu)$$或$$S_c(\phi,\mu)$$最小化的$$\phi$$和$$\mu$$值也非常接近。
 
+### 无条件最小二乘
 
+$$
+\arg\limits_{\phi,\mu} \min S(\phi,\mu)
+$$
 
+→ 需要通过数值方法求解
 
+## 估计的性质
 
+极大似然和最小二乘（条件或无条件）估计量的大样本性质相同。
 
+当$$n$$较大时，估计量**近似无偏且服从正态分布**。
 
+### 自回归模型
+
+#### $$\text{AR}(1)$$模型
+
+$$
+\hat\phi\ \dot\sim\ N(\phi, \frac{1-\phi^2}{n})
+$$
+
+#### $$\text{AR}(2)$$模型
+
+$$
+\text{Var}(\hat{\phi}_1) \approx \text{Var}(\hat{\phi}_2) \approx \frac{1-\phi_2^2}{n} \\
+\text{Corr}(\hat{\phi}_1, \hat{\phi}_2) \approx -\frac{\phi_1}{1-\phi_2} = -\rho_1
+$$
 
 
 
