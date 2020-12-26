@@ -267,13 +267,85 @@ $$
 
 ### 截断线性过程
 
+$$
+Y_{t+\ell} = C_t(\ell) + I_t(\ell),\quad \ell \geq 1
+$$
 
+其中$$C_t(\ell)$$包括常数项以及 $$Y_1, \dots, Y_t, e_1, \dots, e_t$$，$$I_t(\ell)$$包括 $$e_{t+1}, \dots, e_{t+\ell}$$
 
+$$
+\begin{cases}
+E[C_t(\ell) | Y_1, \cdots, Y_t] = C_t(\ell) \\
+E[I_t(\ell) | Y_1, \cdots, Y_t] = 0
+\end{cases} \\ \quad \\
+\Rightarrow\ \hat{Y}_t(\ell) = E[Y_{t+\ell} | Y_1, \cdots, Y_t] = C_t(\ell), \\
+\hat{e}_t(\ell) = Y_{t+\ell} - \hat{Y}_t(\ell) = I_t(\ell)
+$$
 
+#### $$C_t(\ell), I_t(\ell)$$的求解方法
 
+$$
+\begin{align}
+&Y_{t+\ell} = \phi_1 Y_{t+\ell-1} + \cdots + \phi_p Y_{t+\ell-p} + e_{t+\ell} - \theta_1 e_{t+\ell-1} - \cdots - \theta_q e_{t+\ell-q} + \theta_0 \\ \quad \\
+\Rightarrow\ &\phi(B)Y_{t+\ell} = \theta(B)e_{t+\ell} + \theta_0  \\ \quad \\
+\Rightarrow\ &C_t(\ell) + I_t(\ell) = \phi_1 [C_t(\ell-1) + I_t(\ell-1)] + \cdots + \phi_p [C_t(\ell-p) + I_t(\ell-p)] \\ 
+&+ e_{t+\ell} - \theta_1 e_{t+\ell-1} - \cdots - \theta_q e_{t+\ell-q} + \theta_0 \\ \quad \\
+\Rightarrow\ &C_t(\ell) = \phi_1 C_t(\ell-1) + \cdots + \phi_p C_t(\ell-p)  - \theta_\ell e_t - \cdots - \theta_q e_{t+\ell-q} + \theta_0 \\
+&I_t(\ell) = \phi_1 I_t(\ell-1) + \cdots + \phi_p I_t(\ell-p) + e_{t+\ell} - \theta_1 e_{t+\ell-1} - \cdots - \theta_{\ell-1} e_{t+1}
+\end{align}
+$$
 
+其中当$$\tilde\ell \leq 0$$时，$$C_t(\tilde\ell) = Y_{t+\tilde\ell}, I_t(\tilde\ell) = 0$$。
 
+* $$I_t(\ell)$$的通用形式
 
+令 $$e_s^\prime = \begin{cases}e_s,\quad s>t \\ 0,\quad  s \leq t \end{cases}$$ 
+
+$$
+I_t(\ell) = \phi_1 I_t(\ell-1) + \cdots + \phi_p I_t(\ell-p) + e_{t+\ell}^\prime - \theta_1 e_{t+\ell-1}^\prime - \cdots - \theta_q e_{t+\ell-q}^\prime \\
+\Rightarrow\ \phi(B) I_t(\ell) = \theta(B) e_{t+\ell}^\prime \\
+\Rightarrow\ I_t(\ell) = \frac{\theta(B)}{\phi(B)} e_{t+\ell}^\prime = \psi(B) e_{t+\ell}^\prime = e_{t+\ell} + \psi_1 e_{t+\ell-1} + \cdots + \psi_{\ell-1} e_{t+1}
+$$
+
+* $$\ell > q$$条件下$$C_t(\ell)$$的形式
+
+$$
+C_t(\ell) = \phi_1 C_t(\ell-1) + \cdots + \phi_p C_t(\ell-p) + \theta_0 \\
+\Rightarrow\ \phi(B) C_t(\ell) = \theta_0
+$$
+
+当$$\phi_1 + \cdots + \phi_p \neq 1$$时：
+
+$$
+\phi(B) C = (1-\phi_1-\cdots-\phi_p)C = \theta_0 \\
+\Rightarrow\ C = \frac{\theta_0}{1-\phi_1-\cdots-\phi_p}
+$$
+
+此时$$C_t(\ell)$$为常数
+
+当$$\phi_1 + \cdots + \phi_p = 1$$时：
+
+$$
+\begin{align}
+\phi(B) \ell &= (1-\phi_1 B- \cdots - \phi_p B^p) \ell \\
+&= \ell - \phi_1 (\ell-1) - \cdots - \phi_p (\ell-p) \\
+&= \phi_1 + 2\phi_2 + \cdots + p\phi_p
+\end{align} \\
+\Rightarrow\ \phi(B) \frac{\theta_0 \ell}{\phi_1 + 2\phi_2 + \cdots + p\phi_p} = \theta_0 = \phi(B) C_t(\ell)
+$$
+
+此时$$C_t(\ell)$$为确定性趋势
+
+差分情况下：
+
+$$
+\begin{align}
+(1-B)^d \ell^d &= (1-B)^{d-1} [\ell^d - (\ell-1)^d] \\
+&= (1-B)^{d-1} (d \ell^{d-1} + \cdots) = d (1-B)^{d-1} \ell^{d-1} \\
+&= d(d-1) \cdots 1 = d!
+\end{align} \\ \quad \\
+\Rightarrow\ (1-B)^d \frac{\theta_0 \ell^d}{d!} = \theta_0 = (1-B)^d C_t(\ell)
+$$
 
 ## 预测极限
 
