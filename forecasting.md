@@ -438,25 +438,3 @@ $$
 \Rightarrow\ \hat{Y}_{t+1}(\ell) = \hat{Y}_t(\ell+1) + \psi_\ell e_{t+1} = \hat{Y}_t(\ell+1) + \psi_\ell [Y_{t+1} - \hat{Y}_t(1)]
 $$
 
-## 某些ARIMA模型预测的总结
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
