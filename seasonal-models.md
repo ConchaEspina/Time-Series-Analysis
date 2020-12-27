@@ -132,15 +132,116 @@ $$
 
 ## 季节模型预测
 
+对模型递归地应用差分方程形式
 
+### 季节$$\text{AR}(1)_{12}$$模型
 
+$$
+Y_t = \Phi Y_{t-12} + e_t
+$$
 
+$$
+\hat{Y}_t(\ell) = \Phi \hat{Y}_t(\ell-12) = \Phi^{k+1} Y_{t+r-11}
+$$
 
+其中 $$\ell = 12k + r + 1, 0 \leq r < 12, k = 0, 1, \dots$$ 
 
+{% hint style="info" %}
+注意$$k$$是$$\Large\frac{\ell-1}{12}$$的整数部分，$$\Large\frac{r}{12}$$是$$\Large\frac{\ell-1}{12}$$的小数部分。
+{% endhint %}
 
+$$
+\begin{align}
+e_t(\ell) &= Y_{t+\ell} - \hat{Y}_t(\ell) \\
+&= [e_{t+\ell} + \Phi e_{t+\ell-12} + \cdots + \Phi^k 
+e_{t+\ell-12k} + \Phi^{k+1} Y_{t+\ell-12(k+1)}] - \hat{Y}_t(\ell) \\
+&= e_{t+\ell} + \Phi e_{t+\ell-12} + \cdots + \Phi^k e_{t+\ell-12k} \\
+\Rightarrow\ &\text{Var}(e_t(\ell)) = (1+ \Phi^2 + \cdots + \Phi^{2k}) \sigma_e^2 = \frac{1-\Phi^{2k+2}}{1-\Phi^2} \sigma_e^2
+\end{align}
+$$
 
+### 季节$$\text{MA}(1)_{12}$$模型
 
+$$
+Y_t = e_t - \Theta e_{t-12} + \theta_0
+$$
 
+$$
+\begin{cases}
+\hat{Y}_t(1) = -\Theta e_{t-11} + \theta_0 \\
+\hat{Y}_t(2) = -\Theta e_{t-10} + \theta_0 \\
+\qquad \qquad \vdots \\
+\hat{Y}_t(12) = -\Theta e_t + \theta_0
+\end{cases}
+$$
 
+$$
+\hat{Y}_t(\ell) = \theta_0,\quad \ell >12
+$$
 
+$$
+e_t(\ell) = Y_t(\ell) - \hat{Y}_t(\ell) = \begin{cases}
+e_{t+\ell},\quad \ell =1, \cdots, 12 \\
+e_{t+\ell} - \Theta e_{t+\ell-12},\quad \ell > 12
+\end{cases} \\ \quad \\
+\Rightarrow\ \text{Var}(e_t(\ell)) = \begin{cases}
+\sigma_e^2,\quad \ell =1, \cdots, 12 \\
+(1+\Theta^2) \sigma_e^2,\quad \ell > 12
+\end{cases}
+$$
+
+### $$\text{ARIMA}(0,0,0)\times(0,1,1)_{12}$$模型
+
+$$
+\nabla_{12} Y_t = Y_t - Y_{t-12} = e_t - \Theta e_{t-12} \\
+\Rightarrow\ Y_{t+\ell} = Y_{t+\ell-12} + e_{t+\ell} - \Theta e_{t+\ell-12}
+$$
+
+$$
+\begin{cases}
+\hat{Y}_t(1) = Y_{t-11} - \Theta e_{t-11} \\
+\hat{Y}_t(2) = Y_{t-10} - \Theta e_{t-10} \\
+\qquad \qquad \vdots \\
+\hat{Y}_t(12) = Y_t - \Theta e_t
+\end{cases}
+$$
+
+$$
+\hat{Y}_t(\ell) = \hat{Y}_t(\ell-12),\quad \ell > 12
+$$
+
+$$
+Y_t = (1-\Theta)(Y_{t-12} + \Theta Y_{t-24} + \Theta^2 Y_{t-36} + \cdots) + e_t \\
+\Rightarrow\ \hat{Y}_t(\ell) = (1-\Theta)[\hat{Y}_t(\ell-12) + \Theta \hat{Y}_t(\ell-24) + \Theta^2 \hat{Y}_t(\ell-36) + \cdots]
+$$
+
+令$$k$$为$$\Large\frac{\ell-1}{12}$$的整数部分，则有
+
+$$
+\hat{Y}_t(\ell) = (1-\Theta)[\hat{Y}_t(\ell-12) + \Theta \hat{Y}_t(\ell-24) + \cdots + \Theta^k \hat{Y}_t(\ell-12k)] \\
++ (1-\Theta)[\Theta^{k+1}Y_{t+\ell-12(k+1)}+\Theta^{k+2}Y_{t+\ell-12(k+2)}+\cdots] \\ \quad \\
+\Rightarrow\ e_t(\ell) = (1-\Theta)[e_t(\ell-12) + \Theta e_t(\ell-24) + \cdots + \Theta^k e_t(\ell-12k)] \\
+= e_{t+\ell} + (1-\Theta) e_{t+\ell-12} + \cdots + (1-\Theta) e_{t+\ell-12k}
+$$
+
+$$
+\text{Var}(e_t(\ell)) = [1+k(1-\Theta)^2] \sigma_e^2
+$$
+
+### $$\text{ARIMA}(0,1,1)\times(0,1,1)_{12}$$模型
+
+$$
+\nabla \nabla_{12} Y_t = (e_t - \theta e_{t-1}) - \Theta(e_{t-12} - \theta e_{t-13}) \\
+\Rightarrow\ Y_t = Y_{t-1} + Y_{t-12} - Y_{t-13} + e_t - \theta e_{t-1} - \Theta e_{t-12} + \theta\Theta e_{t-13}
+$$
+
+$$
+\hat{Y}_t(\ell) = A_1 + A_2 \ell + \sum_{j=0}^6 [B_{1j} \cos(\frac{2\pi j\ell}{12}) + B_{2j} \sin(\frac{2\pi j\ell}{12})]
+$$
+
+### 预测极限
+
+同
+
+与普通ARIMA模型的预测极限求解方法类似。
 
