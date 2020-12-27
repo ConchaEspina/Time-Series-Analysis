@@ -424,19 +424,29 @@ $$
 
 ## ARIMA预测的更新
 
+$$
+Y_{t+\ell+1} = C_t(\ell+1) + I_t(\ell+1) \\
+= C_t(\ell+1) + e_{t+\ell+1} + \psi_1 e_{t+\ell} + \cdots + \psi_\ell e_{t+1} \\
+\Rightarrow\ \hat{Y}_{t+1}(\ell) = C_t(\ell+1) + \psi_\ell e_{t+1}
+$$
 
-
-
-
-
-
-
-
-
-
-
+$$
+\begin{cases}
+\hat{Y}_{t+1}(\ell) = C_t(\ell+1) + \psi_\ell e_{t+1}\qquad \text{(new)} \\
+\hat{Y}_t(\ell+1) = C_t(\ell+1)\qquad \text{(old)}
+\end{cases} \\
+\Rightarrow\ \hat{Y}_{t+1}(\ell) = \hat{Y}_t(\ell+1) + \psi_\ell e_{t+1} = \hat{Y}_t(\ell+1) + \psi_\ell [Y_{t+1} - \hat{Y}_t(1)]
+$$
 
 ## 某些ARIMA模型预测的总结
+
+
+
+
+
+
+
+
 
 
 
